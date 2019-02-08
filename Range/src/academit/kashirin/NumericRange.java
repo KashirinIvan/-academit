@@ -22,18 +22,18 @@ public class NumericRange {
         System.out.println("Длинна диапазона = " + range1.getLength());
 
         Range range = new Range(70, 900);
-        if (range1.getIntervalIntersection(range) == null) {
+        if (range1.getIntersection(range) == null) {
             System.out.println("Диапазон пересечения " + null);
         } else {
-            System.out.println("Диапазон пересечения " + range1.getIntervalIntersection(range).getFrom() + " " + range1.getIntervalIntersection(range).getTo());
+            System.out.println("Диапазон пересечения " + range1.getIntersection(range).getFrom() + " " + range1.getIntersection(range).getTo());
         }
 
-        for (int i = 0; i < range1.getIntervalUnion(range).length; i++) {
-            System.out.println("Диапазон объединеный " + range1.getIntervalUnion(range)[i].getFrom() + " " + range1.getIntervalUnion(range)[i].getTo());
+        for (int i = 0; i < range1.getUnion(range).length; i++) {
+            System.out.println("Диапазон объединеный " + range1.getUnion(range)[i].getFrom() + " " + range1.getUnion(range)[i].getTo());
         }
 
-        for (int i = 0; i < range1.getIntervalDifference(range).length; i++) {
-            System.out.println("Диапазон разности " + range1.getIntervalDifference(range)[i].getFrom() + " " + range1.getIntervalDifference(range)[i].getTo());
+        for (int i = 0; i < range1.getDifference(range).length; i++) {
+            System.out.println("Диапазон разности " + range1.getDifference(range)[i].getFrom() + " " + range1.getDifference(range)[i].getTo());
         }
     }
 }

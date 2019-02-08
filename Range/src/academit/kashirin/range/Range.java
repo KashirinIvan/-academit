@@ -33,7 +33,7 @@ public class Range {
         return selectedNumber >= from && selectedNumber <= to;
     }
 
-    public Range getIntervalIntersection(Range range) {
+    public Range getIntersection(Range range) {
         if ((range.from >= to) || (range.to <= from)) {
             return null;
         } else {
@@ -41,7 +41,7 @@ public class Range {
         }
     }
 
-    public Range[] getIntervalUnion(Range range) {
+    public Range[] getUnion(Range range) {
         if ((range.from > to) || (range.to < from)) {
             return new Range[]{new Range(from, to), new Range(range.from, range.to)};
         } else {
@@ -49,7 +49,7 @@ public class Range {
         }
     }
 
-    public Range[] getIntervalDifference(Range range) {
+    public Range[] getDifference(Range range) {
         if ((range.from >= to) || (range.to <= from)) {
             return new Range[]{new Range(from, to)};
         } else if (from >= range.from) {
