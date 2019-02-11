@@ -1,12 +1,14 @@
-package academit.kashirin.shape.square;
+package academit.kashirin.shape.rectangle;
 
 import academit.kashirin.shape.Shape;
 
-public class Square implements Shape {
+public class Rectangle implements Shape {
     private double width;
+    private double height;
 
-    public Square(double width) {
+    public Rectangle(double width, double height) {
         this.width = width;
+        this.height = height;
     }
 
     @Override
@@ -16,22 +18,22 @@ public class Square implements Shape {
 
     @Override
     public double getHeight() {
-        return width;
+        return height;
     }
 
     @Override
     public double getArea() {
-        return width * width;
+        return width * height;
     }
 
     @Override
     public double getPerimeter() {
-        return 2 * (width + width);
+        return 2 * (width + height);
     }
 
     @Override
     public String toString() {
-        return "Квадрат " + "площадь = " + getArea() + " периметр = " + getPerimeter();
+        return "Прямоугольник " + "площадь = " + getArea() + " периметр = " + getPerimeter();
     }
 
     @Override
@@ -39,6 +41,7 @@ public class Square implements Shape {
         final int prime = 37;
         int hash = 1;
         hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
         return hash;
     }
 
@@ -46,7 +49,7 @@ public class Square implements Shape {
     public boolean equals(Object o) {
         if (o == this) return true;
         if (o == null || o.getClass() != this.getClass()) return false;
-        Square p = (Square) o;
-        return width == p.width;
+        Rectangle p = (Rectangle) o;
+        return width == p.width && height == p.height;
     }
 }

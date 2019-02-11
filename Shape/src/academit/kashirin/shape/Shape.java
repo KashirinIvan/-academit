@@ -1,27 +1,12 @@
 package academit.kashirin.shape;
 
-public class Shape {
-    private double width;
-    private double height;
+public interface Shape {
 
-    public Shape(double width, double height) {
-        this.width = width;
-        this.height = height;
-    }
+    double getWidth();
 
-    public double getWidth() {
-        return 0;
-    }
+    double getHeight();
 
-    public double getHeight() {
-        return 0;
-    }
+    double getArea();
 
-    public double getArea() {
-        return 0;
-    }
-
-    public double getPerimeter() {
-        return 0;
-    }
+    double getPerimeter();
 }
