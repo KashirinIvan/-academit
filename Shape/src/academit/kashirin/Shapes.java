@@ -1,12 +1,12 @@
 package academit.kashirin;
 
-import academit.kashirin.comparator.ComparatorArea;
-import academit.kashirin.comparator.ComparatorPerimeter;
+import academit.kashirin.comparator.AreaComparator;
+import academit.kashirin.comparator.PerimeterComparator;
 import academit.kashirin.shape.Shape;
-import academit.kashirin.shape.circle.Circle;
-import academit.kashirin.shape.rectangle.Rectangle;
-import academit.kashirin.shape.square.Square;
-import academit.kashirin.shape.triangle.Triangle;
+import academit.kashirin.shape.Circle;
+import academit.kashirin.shape.Rectangle;
+import academit.kashirin.shape.Square;
+import academit.kashirin.shape.Triangle;
 
 import java.util.Arrays;
 
@@ -28,12 +28,12 @@ public class Shapes {
     }
 
     public static Shape getShapeMaxArea(Shape[] shapes) {
-        Arrays.sort(shapes, new ComparatorArea());
+        Arrays.sort(shapes, new AreaComparator());
         return shapes[shapes.length - 1];
     }
 
     public static Shape getShapeSecondPerimeter(Shape[] shapes) {
-        Arrays.sort(shapes, new ComparatorPerimeter());
+        Arrays.sort(shapes, new PerimeterComparator());
         return shapes[shapes.length - 2];
     }
 }

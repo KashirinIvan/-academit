@@ -1,9 +1,6 @@
-package academit.kashirin.shape.triangle;
-
-import academit.kashirin.shape.Shape;
+package academit.kashirin.shape;
 
 public class Triangle implements Shape {
-
     private double x1;
     private double y1;
     private double x2;
@@ -21,15 +18,19 @@ public class Triangle implements Shape {
     }
 
     private double getA() {
-        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+        return getLength(x2, x1, y2, y1);
     }
 
     private double getB() {
-        return Math.sqrt(Math.pow((x3 - x2), 2) + Math.pow((y3 - y2), 2));
+        return getLength(x3, x2, y3, y2);
     }
 
     private double getC() {
-        return Math.sqrt(Math.pow((x1 - x3), 2) + Math.pow((y1 - y3), 2));
+        return getLength(x1, x3, y1, y3);
+    }
+
+    private double getLength(double x1, double x2, double y1, double y2) {
+        return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
 
     @Override
@@ -44,20 +45,18 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-
         double perimeterHalf = (getA() + getB() + getC()) / 2;
         return Math.sqrt(perimeterHalf * (perimeterHalf - getA()) * (perimeterHalf - getB()) * (perimeterHalf - getC()));
     }
 
     @Override
     public double getPerimeter() {
-
         return getA() + getB() + getC();
     }
 
     @Override
     public String toString() {
-        return "Треугольник " + "площадь = " + getArea() + " периметр = " + getPerimeter();
+        return "Треугольник площадь = " + getArea() + " периметр = " + getPerimeter() + " x1 = " + x1 + " x2 = " + x2 + " x3 = " + x3 + " y1 = " + y1 + " y2 = " + y2 + " y3 = " + y3;
     }
 
     @Override
@@ -75,8 +74,12 @@ public class Triangle implements Shape {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null || o.getClass() != this.getClass()) return false;
+        if (o == this) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         Triangle p = (Triangle) o;
         return x1 == p.x1 && y1 == p.y1 && x2 == p.x2 && y2 == p.y2 && x3 == p.x3 && y3 == p.y3;
     }

@@ -1,6 +1,4 @@
-package academit.kashirin.shape.square;
-
-import academit.kashirin.shape.Shape;
+package academit.kashirin.shape;
 
 public class Square implements Shape {
     private double width;
@@ -31,21 +29,22 @@ public class Square implements Shape {
 
     @Override
     public String toString() {
-        return "Квадрат " + "площадь = " + getArea() + " периметр = " + getPerimeter();
+        return "Квадрат площадь = " + getArea() + " периметр = " + getPerimeter() + " ширина = " + getWidth();
     }
 
     @Override
     public int hashCode() {
-        final int prime = 37;
-        int hash = 1;
-        hash = prime * hash + Double.hashCode(width);
-        return hash;
+        return Double.hashCode(width);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null || o.getClass() != this.getClass()) return false;
+        if (o == this) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         Square p = (Square) o;
         return width == p.width;
     }

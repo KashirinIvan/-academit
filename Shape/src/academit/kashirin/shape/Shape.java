@@ -1,7 +1,6 @@
 package academit.kashirin.shape;
 
 public interface Shape {
-
     double getWidth();
 
     double getHeight();

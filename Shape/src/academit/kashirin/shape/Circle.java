@@ -1,9 +1,6 @@
-package academit.kashirin.shape.circle;
-
-import academit.kashirin.shape.Shape;
+package academit.kashirin.shape;
 
 public class Circle implements Shape {
-
     private double radius;
 
     public Circle(double radius) {
@@ -32,21 +29,22 @@ public class Circle implements Shape {
 
     @Override
     public String toString() {
-        return "Круг " + "площадь = " + getArea() + " периметр = " + getPerimeter();
+        return "Круг площадь = " + getArea() + " периметр = " + getPerimeter() + " радиус = " + getWidth();
     }
 
     @Override
     public int hashCode() {
-        final int prime = 37;
-        int hash = 1;
-        hash = prime * hash + Double.hashCode(radius);
-        return hash;
+        return Double.hashCode(radius);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null || o.getClass() != this.getClass()) return false;
+        if (o == this) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         Circle p = (Circle) o;
         return radius == p.radius;
     }

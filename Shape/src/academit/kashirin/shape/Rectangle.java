@@ -1,6 +1,4 @@
-package academit.kashirin.shape.rectangle;
-
-import academit.kashirin.shape.Shape;
+package academit.kashirin.shape;
 
 public class Rectangle implements Shape {
     private double width;
@@ -33,7 +31,7 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return "Прямоугольник " + "площадь = " + getArea() + " периметр = " + getPerimeter();
+        return "Прямоугольник площадь = " + getArea() + " периметр = " + getPerimeter() + " ширина = " + getWidth() + " высота = " + getHeight();
     }
 
     @Override
@@ -47,8 +45,12 @@ public class Rectangle implements Shape {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null || o.getClass() != this.getClass()) return false;
+        if (o == this) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         Rectangle p = (Rectangle) o;
         return width == p.width && height == p.height;
     }
