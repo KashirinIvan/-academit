@@ -21,12 +21,20 @@ public class Vector {
         if (component.length >= n) {
             this.component = component;
         } else {
-
+            this.component = new double[n];
+            if (component.length >= 0) {
+                System.arraycopy(component, 0, this.component, 0, component.length);
+            }
         }
     }
 
+    public int getSize(){
+        return 1;
+    }
+    
     @Override
     public String toString() {
-        return "{" + component + "}";
+        return Arrays.toString(component);
+
     }
 }
