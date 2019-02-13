@@ -29,7 +29,7 @@ public class Square implements Shape {
 
     @Override
     public String toString() {
-        return "Ширина = " + width + " высота = " + width;
+        return this.getClass().getSimpleName() + " ширина = " + width + " высота = " + width;
     }
 
     @Override
