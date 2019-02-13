@@ -29,7 +29,7 @@ public class Triangle implements Shape {
         return getLength(x1, x3, y1, y3);
     }
 
-    private double getLength(double x1, double x2, double y1, double y2) {
+    private static double getLength(double x1, double x2, double y1, double y2) {
         return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
 
