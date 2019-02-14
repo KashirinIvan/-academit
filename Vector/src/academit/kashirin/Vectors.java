@@ -20,23 +20,23 @@ public class Vectors {
         System.out.println(vec3.getSize());
         System.out.println(vec5.getSize());
 
-        vec3.sumVector(vec5);
+        vec3.sum(vec5);
         System.out.println(vec3.toString());
 
-        vec4.differenceVector(vec5);
+        vec4.difference(vec5);
         System.out.println(vec4.toString());
 
-        vec5.multiplicationVector(2);
+        vec5.multiplication(2);
         System.out.println(vec5.toString());
 
-        vec5.reversalVector();
+        vec5.reversal();
         System.out.println(vec5.toString());
 
-        System.out.println(vec5.lengthVector());
+        System.out.println(vec5.length());
 
-        System.out.println(vec5.getComponentVector(4));
+        System.out.println(vec5.getComponent(4));
 
-        vec5.setComponentVector(0, 55);
+        vec5.setComponent(0, 55);
         System.out.println(vec5.toString());
 
         System.out.println(vec1.equals(vec3));
