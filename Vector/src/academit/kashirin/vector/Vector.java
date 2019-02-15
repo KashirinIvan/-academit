@@ -40,7 +40,9 @@ public class Vector {
     @Override
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ", "{", "}");
-        Arrays.stream(components).forEach(element -> joiner.add(element + " "));
+        for (double element : components) {
+            joiner.add(Double.toString(element));
+        }
         return joiner.toString();
     }
 
