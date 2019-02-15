@@ -20,8 +20,8 @@ public class Vectors {
         System.out.println(vec3.getSize());
         System.out.println(vec5.getSize());
 
-        vec3.sum(vec5);
-        System.out.println(vec3.toString());
+        vec5.sum(vec3);
+        System.out.println(vec5.toString());
 
         vec4.difference(vec5);
         System.out.println(vec4.toString());

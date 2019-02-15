@@ -14,8 +14,8 @@ public class Vector {
         this.components = new double[n];
     }
 
-    public Vector(Vector ob) {
-        this.components = Arrays.copyOf(ob.components, ob.components.length);
+    public Vector(Vector vector) {
+        this.components = Arrays.copyOf(vector.components, vector.components.length);
     }
 
     public Vector(double[] component) {
@@ -45,21 +45,23 @@ public class Vector {
         return joiner.toString();
     }
 
-    public void sum(Vector vector1) {
-        int maxLength = Math.max(getSize(), vector1.getSize());
-        double[] saveArray = Arrays.copyOf(this.components, maxLength);
-        this.components = new double[maxLength];
-        for (int i = 0; i < maxLength; i++) {
-            this.components[i] = saveArray[i] + vector1.components[i];
+    public void sum(Vector vector) {
+        int maxLength = Math.max(getSize(), vector.getSize());
+        if (getSize() < vector.getSize()) {
+            this.components = Arrays.copyOf(this.components, maxLength);
+        }
+        for (int i = 0; i < vector.getSize(); i++) {
+            this.components[i] += vector.components[i];
         }
     }
 
-    public void difference(Vector vector1) {
-        int maxLength = Math.max(getSize(), vector1.getSize());
-        double[] saveArray = Arrays.copyOf(this.components, maxLength);
-        this.components = new double[maxLength];
-        for (int i = 0; i < maxLength; i++) {
-            this.components[i] = saveArray[i] - vector1.components[i];
+    public void difference(Vector vector) {
+        int maxLength = Math.max(getSize(), vector.getSize());
+        if (getSize() < vector.getSize()) {
+            this.components = Arrays.copyOf(this.components, maxLength);
+        }
+        for (int i = 0; i < vector.getSize(); i++) {
+            this.components[i] -= vector.components[i];
         }
     }
 
