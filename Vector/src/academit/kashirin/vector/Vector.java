@@ -3,6 +3,7 @@ package academit.kashirin.vector;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+
 public class Vector {
     private double[] components;
 
@@ -39,21 +40,18 @@ public class Vector {
     @Override
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ", "{", "}");
-        for (String element : (String[])(components)) {
-            joiner.add(element);
-        }
+        Arrays.stream(components).forEach(element -> joiner.add(element + " "));
         return joiner.toString();
     }
 
     public void sum(Vector ob) {
         if (getSize() >= ob.components.length) {
-            double[] saveArray = Arrays.copyOf(ob.components, getSize());
+            ob.components = Arrays.copyOf(ob.components, getSize());
             for (int i = 0; i < getSize(); i++) {
-                this.components[i] += saveArray[i];
+                this.components[i] += ob.components[i];
             }
         } else {
-            double[] saveArray = Arrays.copyOf(this.components, getSize());
-            this.components = Arrays.copyOf(saveArray, ob.components.length);
+            this.components = Arrays.copyOf(this.components, ob.components.length);
             for (int i = 0; i < getSize(); i++) {
                 this.components[i] += ob.components[i];
             }
@@ -62,13 +60,12 @@ public class Vector {
 
     public void difference(Vector ob) {
         if (getSize() >= ob.components.length) {
-            double[] saveArray = Arrays.copyOf(ob.components, getSize());
+            ob.components = Arrays.copyOf(ob.components, getSize());
             for (int i = 0; i < getSize(); i++) {
-                this.components[i] -= saveArray[i];
+                this.components[i] -= ob.components[i];
             }
         } else {
-            double[] saveArray = Arrays.copyOf(this.components, getSize());
-            this.components = Arrays.copyOf(saveArray, ob.components.length);
+            this.components = Arrays.copyOf(this.components, ob.components.length);
             for (int i = 0; i < getSize(); i++) {
                 this.components[i] -= ob.components[i];
             }
@@ -81,16 +78,14 @@ public class Vector {
         }
     }
 
-    public void reversal() {
-        for (int i = 0; i < getSize(); i++) {
-            this.components[i] *= -1;
-        }
+    public void expand() {
+        multiplication(-1);
     }
 
-    public double length() {
+    public double getLength() {
         double length = 0;
-        for (int i = 0; i < getSize(); i++) {
-            length += Math.pow(this.components[i], 2);
+        for (double element : this.components) {
+            length += Math.pow(element, 2);
         }
         return Math.sqrt(length);
     }
@@ -125,43 +120,24 @@ public class Vector {
         return true;
     }
 
-    public static Vector sumVector(Vector ob, Vector ob1) {
-        if (ob.components.length >= ob1.components.length) {
-            Vector saveArray = new Vector(ob.components.length);
-            for (int i = 0; i < ob.components.length; i++) {
-                saveArray.components[i] = ob.components[i] + ob1.components[i];
-            }
-            return saveArray;
-        } else {
-            Vector saveArray = new Vector(ob1.components.length);
-            for (int i = 0; i < ob1.components.length; i++) {
-                saveArray.components[i] = ob.components[i] + ob1.components[i];
-            }
-            return saveArray;
-        }
-    }
-
-    public static Vector differenceVector(Vector ob, Vector ob1) {
-        if (ob.components.length >= ob1.components.length) {
-            Vector saveArray = new Vector(ob.components.length);
-            for (int i = 0; i < ob.components.length; i++) {
-                saveArray.components[i] = ob.components[i] - ob1.components[i];
-            }
-            return saveArray;
-        } else {
-            Vector saveArray = new Vector(ob1.components.length);
-            for (int i = 0; i < ob1.components.length; i++) {
-                saveArray.components[i] = ob.components[i] - ob1.components[i];
-            }
-            return saveArray;
-        }
-    }
-
-    public static Vector multiplicationVector(Vector ob, double scalar) {
-        Vector saveArray = new Vector(ob.components.length);
-        for (int i = 0; i < ob.components.length; i++) {
-            saveArray.components[i] = ob.components[i] * scalar;
-        }
+    public static Vector sum(Vector ob, Vector ob1) {
+        Vector saveArray = new Vector(ob);
+        saveArray.sum(ob1);
         return saveArray;
+    }
+
+    public static Vector difference(Vector ob, Vector ob1) {
+        Vector saveArray = new Vector(ob);
+        saveArray.difference(ob1);
+        return saveArray;
+    }
+
+    public static double getMultiplication(Vector ob, Vector ob1) {
+        int minLength = Math.min(ob.components.length, ob1.components.length);
+        double scalar = 0;
+        for (int i = 0; i < minLength; i++) {
+            scalar += ob.components[i] * ob1.components[i];
+        }
+        return scalar;
     }
 }

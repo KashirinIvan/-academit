@@ -29,10 +29,10 @@ public class Vectors {
         vec5.multiplication(2);
         System.out.println(vec5.toString());
 
-        vec5.reversal();
+        vec5.expand();
         System.out.println(vec5.toString());
 
-        System.out.println(vec5.length());
+        System.out.println(vec5.getLength());
 
         System.out.println(vec5.getComponent(4));
 
@@ -41,13 +41,12 @@ public class Vectors {
 
         System.out.println(vec1.equals(vec3));
 
-        Vector vec6 = Vector.sumVector(vec5, vec3);
+        Vector vec6 = Vector.sum(vec5, vec3);
         System.out.println(vec6.toString());
 
-        Vector vec7 = Vector.differenceVector(vec5, vec3);
+        Vector vec7 = Vector.difference(vec5, vec3);
         System.out.println(vec7.toString());
 
-        Vector vec8 = Vector.multiplicationVector(vec7, 5);
-        System.out.println(vec8.toString());
+        System.out.println(Vector.getMultiplication(vec6,vec7));
     }
 }
