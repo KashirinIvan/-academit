@@ -15,7 +15,6 @@ public class Vector {
     }
 
     public Vector(Vector ob) {
-        this.components = new double[ob.components.length];
         this.components = Arrays.copyOf(ob.components, ob.components.length);
     }
 
@@ -46,31 +45,21 @@ public class Vector {
         return joiner.toString();
     }
 
-    public void sum(Vector ob) {
-        if (getSize() >= ob.components.length) {
-            ob.components = Arrays.copyOf(ob.components, getSize());
-            for (int i = 0; i < getSize(); i++) {
-                this.components[i] += ob.components[i];
-            }
-        } else {
-            this.components = Arrays.copyOf(this.components, ob.components.length);
-            for (int i = 0; i < getSize(); i++) {
-                this.components[i] += ob.components[i];
-            }
+    public void sum(Vector vector1) {
+        int maxLength = Math.max(getSize(), vector1.getSize());
+        double[] saveArray = Arrays.copyOf(this.components, maxLength);
+        this.components = new double[maxLength];
+        for (int i = 0; i < maxLength; i++) {
+            this.components[i] = saveArray[i] + vector1.components[i];
         }
     }
 
-    public void difference(Vector ob) {
-        if (getSize() >= ob.components.length) {
-            ob.components = Arrays.copyOf(ob.components, getSize());
-            for (int i = 0; i < getSize(); i++) {
-                this.components[i] -= ob.components[i];
-            }
-        } else {
-            this.components = Arrays.copyOf(this.components, ob.components.length);
-            for (int i = 0; i < getSize(); i++) {
-                this.components[i] -= ob.components[i];
-            }
+    public void difference(Vector vector1) {
+        int maxLength = Math.max(getSize(), vector1.getSize());
+        double[] saveArray = Arrays.copyOf(this.components, maxLength);
+        this.components = new double[maxLength];
+        for (int i = 0; i < maxLength; i++) {
+            this.components[i] = saveArray[i] - vector1.components[i];
         }
     }
 
@@ -114,6 +103,9 @@ public class Vector {
             return false;
         }
         Vector p = (Vector) o;
+        if (p.getSize() != getSize()) {
+            return false;
+        }
         for (int i = 0; i < components.length; i++) {
             if (components[i] != p.components[i]) {
                 return false;
@@ -122,23 +114,23 @@ public class Vector {
         return true;
     }
 
-    public static Vector sum(Vector ob, Vector ob1) {
-        Vector saveArray = new Vector(ob);
-        saveArray.sum(ob1);
+    public static Vector sum(Vector vector1, Vector vector2) {
+        Vector saveArray = new Vector(vector1);
+        saveArray.sum(vector2);
         return saveArray;
     }
 
-    public static Vector difference(Vector ob, Vector ob1) {
-        Vector saveArray = new Vector(ob);
-        saveArray.difference(ob1);
+    public static Vector difference(Vector vector1, Vector vector2) {
+        Vector saveArray = new Vector(vector1);
+        saveArray.difference(vector2);
         return saveArray;
     }
 
-    public static double getMultiplication(Vector ob, Vector ob1) {
-        int minLength = Math.min(ob.components.length, ob1.components.length);
+    public static double getMultiplication(Vector vector1, Vector vector2) {
+        int minLength = Math.min(vector1.components.length, vector2.components.length);
         double scalar = 0;
         for (int i = 0; i < minLength; i++) {
-            scalar += ob.components[i] * ob1.components[i];
+            scalar += vector1.components[i] * vector2.components[i];
         }
         return scalar;
     }
