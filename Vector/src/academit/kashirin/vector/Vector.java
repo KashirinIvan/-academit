@@ -46,9 +46,8 @@ public class Vector {
     }
 
     public void sum(Vector vector) {
-        int maxLength = Math.max(getSize(), vector.getSize());
         if (getSize() < vector.getSize()) {
-            this.components = Arrays.copyOf(this.components, maxLength);
+            this.components = Arrays.copyOf(this.components, vector.getSize());
         }
         for (int i = 0; i < vector.getSize(); i++) {
             this.components[i] += vector.components[i];
@@ -56,9 +55,8 @@ public class Vector {
     }
 
     public void difference(Vector vector) {
-        int maxLength = Math.max(getSize(), vector.getSize());
         if (getSize() < vector.getSize()) {
-            this.components = Arrays.copyOf(this.components, maxLength);
+            this.components = Arrays.copyOf(this.components, vector.getSize());
         }
         for (int i = 0; i < vector.getSize(); i++) {
             this.components[i] -= vector.components[i];
