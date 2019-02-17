@@ -2,7 +2,6 @@ package academit.kashirin.matrix;
 
 import academit.kashirin.vector.Vector;
 
-import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class Matrix {
@@ -15,9 +14,11 @@ public class Matrix {
         }
     }
 
-    public Matrix(Matrix ob) {
-        this.components = new Vector[ob.components.length];
-        this.components = Arrays.copyOf(ob.components, ob.components.length);
+    public Matrix(Matrix matrix) {
+        this.components = new Vector[matrix.getSizeM()];
+        for (int i = 0; i < matrix.getSizeM(); i++) {
+            this.components[i] = new Vector(matrix.components[i]);
+        }
     }
 
     public Matrix(double[][] component) {
@@ -76,7 +77,11 @@ public class Matrix {
     }
 
     public void transposition() {
-
+        Matrix matrix = new Matrix(this.components);
+        this.components = new Vector[getSizeN()];
+        for (int i = 0; i < matrix.getSizeN(); i++) {
+            this.components[i] = matrix.getColumnVectorByIndex(i);
+        }
     }
 
     public void multiplication(double scalar) {
@@ -98,4 +103,47 @@ public class Matrix {
         }
         return joiner.toString();
     }
+
+    public Vector multiplicationByVector(Vector vector) {
+        Vector result = new Vector(getSizeM());
+        for (int i = 0; i < getSizeM(); i++) {
+            double sum = 0;
+            for (int j = 0; j < getSizeN(); j++) {
+                sum += this.components[i].getComponent(j) * vector.getComponent(j);
+            }
+            result.setComponent(i, sum);
+        }
+        return result;
+    }
+
+    public void sum(Matrix matrix) {
+        for (int i = 0; i < getSizeM(); i++) {
+            for (int j = 0; j < getSizeN(); j++) {
+                components[i].setComponent(j, components[i].getComponent(j) + matrix.components[i].getComponent(j));
+            }
+        }
+    }
+
+    public void difference(Matrix matrix) {
+        for (int i = 0; i < getSizeM(); i++) {
+            for (int j = 0; j < getSizeN(); j++) {
+                components[i].setComponent(j, components[i].getComponent(j) - matrix.components[i].getComponent(j));
+            }
+        }
+    }
+
+    public static Matrix sum(Matrix matrix1, Matrix matrix2) {
+        Matrix saveMatrix = new Matrix(matrix1);
+        saveMatrix.sum(matrix2);
+        return saveMatrix;
+    }
+
+    public static Matrix difference(Matrix matrix1, Matrix matrix2) {
+        Matrix saveMatrix = new Matrix(matrix1);
+        saveMatrix.difference(matrix2);
+        return saveMatrix;
+    }
+
+
 }
+
