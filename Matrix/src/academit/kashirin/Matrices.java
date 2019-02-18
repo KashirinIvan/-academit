@@ -31,7 +31,11 @@ public class Matrices {
         matrix3.multiplication(3);
         System.out.println(matrix3.toString());
 
-        System.out.println(matrix3.getDeterminant());
+        Matrix matrix13 = new Matrix((new double[][]{{11, -2}, {7, 5}}));
+        System.out.println(matrix13.getDeterminant());
+
+        Matrix matrix14 = new Matrix((new double[][]{{3, 3, -1}, {4, 1, 3}, {1, -2, -2}}));
+        System.out.println(matrix14.getDeterminant());
 
         Vector result = new Vector(new double[]{5.2, 6.4, 56, 41, 2, 21});
         result = matrix3.multiplicationByVector(result);
@@ -54,5 +58,12 @@ public class Matrices {
 
         Matrix matrix5 = Matrix.difference(matrix8, matrix9);
         System.out.println(matrix5.toString());
+
+        Matrix matrix10 = new Matrix(new double[][]{{2.2, 23, 4}, {23, 3.4, 5}});
+        Matrix matrix11 = new Matrix(new double[][]{{2.2, 23, 43.4, 3, 5}, {23, 3.4, 5, 67, 6}, {23, 3.4, 5, 67, 6}});
+
+        Matrix matrix12 = Matrix.multiplication(matrix10, matrix11);
+        System.out.println(matrix12.toString());
+
     }
 }
