@@ -15,15 +15,15 @@ public class Matrices {
         System.out.println(matrix2.toString());
         System.out.println(matrix3.toString());
 
-        System.out.println(matrix.getSizeN());
-        System.out.println(matrix.getSizeM());
+        System.out.println(matrix.getNumberColumns());
+        System.out.println(matrix.getNumberRows());
 
-        System.out.println(matrix3.getLineVectorByIndex(1));
+        System.out.println(matrix3.getRow(1));
 
-        matrix2.setLineVectorByIndex(1, (new Vector(new double[]{5, 45, 5.6, 7, 9})));
+        matrix2.setRow(1, (new Vector(new double[]{5, 45, 5.6, 7, 9.4, 6})));
         System.out.println(matrix2.toString());
 
-        System.out.println(matrix3.getColumnVectorByIndex(2));
+        System.out.println(matrix3.getColumn(2));
 
         matrix2.transposition();
         System.out.println(matrix2.toString());

@@ -12,10 +12,17 @@ public class Csv {
             while (scanner.hasNext()) {
                 stringInFile += scanner.nextLine();
                 stringInFile += System.lineSeparator();
-                stringInFile += " ";
-                stringInFile = stringInFile.replace(",", "</td><td>");
-                //stringInFile = stringInFile.replace("\r\n", "</td><td>");
+
             }
+
+            for(int i=0;i<stringInFile.length();i++)
+            {
+                char simbol=stringInFile.charAt(i);
+
+            }
+            stringInFile += " ";
+            stringInFile = stringInFile.replace(",", "</td><td>");
+            //stringInFile = stringInFile.replace("\r\n", "</td><td>");
             //stringInFile = stringInFile.replace(",", "</td><td>");
 
 
