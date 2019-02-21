@@ -25,8 +25,9 @@ public class Matrices {
 
         System.out.println(matrix3.getColumn(2));
 
-        matrix2.transposition();
-        System.out.println(matrix2.toString());
+        Matrix matrix15 = new Matrix(new double[][]{{3.2, 24}, {4.4, 9}});
+        matrix15.transposition();
+        System.out.println(matrix15.toString());
 
         matrix3.multiplication(3);
         System.out.println(matrix3.toString());
@@ -34,7 +35,7 @@ public class Matrices {
         Matrix matrix13 = new Matrix((new double[][]{{11, -2}, {7, 5}}));
         System.out.println(matrix13.getDeterminant());
 
-        Matrix matrix14 = new Matrix((new double[][]{{3, 3, -1}, {4, 1, 3}, {1, -2, -2}}));
+        Matrix matrix14 = new Matrix((new double[][]{{3, 3, -1, 5}, {4, 1, 3, 6}, {1, -2, -2, 7}, {56, -2, -2, 7}}));
         System.out.println(matrix14.getDeterminant());
 
         Vector result = new Vector(new double[]{5.2, 6.4, 56, 41, 2, 21});

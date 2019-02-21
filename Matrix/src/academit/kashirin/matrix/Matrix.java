@@ -104,7 +104,16 @@ public class Matrix {
     }
 
     public void transposition() {
-
+        if (getNumberColumns() != getNumberRows()) {
+            throw new IllegalArgumentException("Матрица не квадратная");
+        }
+        for (int i = 0; i < getNumberRows(); i++) {
+            for (int j = i; j < getNumberColumns(); j++) {
+                double temp = this.vectors[i].getComponent(j);
+                this.vectors[i].setComponent(j, this.vectors[j].getComponent(i));
+                this.vectors[j].setComponent(i, temp);
+            }
+        }
     }
 
     public void multiplication(double scalar) {
@@ -117,20 +126,44 @@ public class Matrix {
         if (getNumberColumns() != getNumberRows()) {
             throw new IllegalArgumentException("Матрица не квадратная");
         }
-        double determinant = 0;
+        double determinant = 0.0;
         if (getNumberColumns() == 2) {
-            determinant = vectors[0].getComponent(0) * vectors[1].getComponent(1) - vectors[0].getComponent(1) * vectors[1].getComponent(0);
-        }
-        if (getNumberColumns() == 3) {
-            determinant = vectors[0].getComponent(0) * vectors[1].getComponent(1) * vectors[2].getComponent(2) +
-                    vectors[1].getComponent(0) * vectors[2].getComponent(1) * vectors[0].getComponent(2) +
-                    vectors[0].getComponent(1) * vectors[1].getComponent(2) * vectors[2].getComponent(0) -
-                    vectors[0].getComponent(2) * vectors[1].getComponent(1) * vectors[2].getComponent(0) -
-                    vectors[1].getComponent(0) * vectors[0].getComponent(1) * vectors[2].getComponent(2) -
-                    vectors[0].getComponent(0) * vectors[1].getComponent(2) * vectors[2].getComponent(1);
+            determinant = this.vectors[0].getComponent(0) * this.vectors[1].getComponent(1) - this.vectors[1].getComponent(0) * this.vectors[0].getComponent(1);
+        } else {
+            int coefficient;
+            for (int i = 0; i < getNumberColumns(); i++) {
+                if (i % 2 == 1) {
+                    coefficient = -1;
+                } else {
+                    coefficient = 1;
+                }
+                determinant += coefficient * this.vectors[0].getComponent(i) * GetMinor(this, 0, i).getDeterminant();
+            }
         }
         return determinant;
     }
+
+    private Matrix GetMinor(Matrix matrix, int row, int column) {
+        int minorLength = matrix.getNumberRows() - 1;
+        Matrix minor = new Matrix(minorLength, minorLength);
+        int dI = 0;
+        for (int i = 0; i <= minorLength; i++) {
+            int dJ = 0;
+            for (int j = 0; j <= minorLength; j++) {
+                if (i == row) {
+                    dI = 1;
+                } else {
+                    if (j == column) {
+                        dJ = 1;
+                    } else {
+                        minor.vectors[i - dI].setComponent((j - dJ), matrix.vectors[i].getComponent(j));
+                    }
+                }
+            }
+        }
+        return minor;
+    }
+
 
     @Override
     public String toString() {
