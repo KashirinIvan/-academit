@@ -15,8 +15,8 @@ public class Matrices {
         System.out.println(matrix2.toString());
         System.out.println(matrix3.toString());
 
-        System.out.println(matrix.getNumberColumns());
-        System.out.println(matrix.getNumberRows());
+        System.out.println(matrix.getColumnsNumber());
+        System.out.println(matrix.getRowsNumber());
 
         System.out.println(matrix3.getRow(1));
 
@@ -25,7 +25,7 @@ public class Matrices {
 
         System.out.println(matrix3.getColumn(2));
 
-        Matrix matrix15 = new Matrix(new double[][]{{3.2, 24}, {4.4, 9}});
+        Matrix matrix15 = new Matrix(new double[][]{{3.2, 24, 4}, {4.4, 9, 6}});
         matrix15.transposition();
         System.out.println(matrix15.toString());
 
