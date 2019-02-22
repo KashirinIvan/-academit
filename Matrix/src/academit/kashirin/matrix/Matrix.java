@@ -136,20 +136,20 @@ public class Matrix {
                 } else {
                     coefficient = 1;
                 }
-                determinant += coefficient * this.arrayVectors[0].getComponent(i) * getMinor(this, 0, i).getDeterminant();
+                determinant += coefficient * this.arrayVectors[0].getComponent(i) * getMinor(this, i).getDeterminant();
             }
         }
         return determinant;
     }
 
-    private Matrix getMinor(Matrix matrix, int row, int column) {
+    private Matrix getMinor(Matrix matrix, int column) {
         int minorLength = matrix.getRowsNumber() - 1;
         Matrix minor = new Matrix(minorLength, minorLength);
         int dI = 0;
         for (int i = 0; i <= minorLength; i++) {
             int dJ = 0;
             for (int j = 0; j <= minorLength; j++) {
-                if (i == row) {
+                if (i == 0) {
                     dI = 1;
                 } else {
                     if (j == column) {
