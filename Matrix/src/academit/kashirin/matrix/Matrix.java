@@ -157,7 +157,7 @@ public class Matrix {
                     } else {
                         minor.arrayVectors[i - dI].setComponent((j - dJ), matrix.arrayVectors[i].getComponent(j));
                     }
-                }
+                } 
             }
         }
         return minor;
