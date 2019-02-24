@@ -27,10 +27,16 @@ public class Matrix {
     }
 
     public Matrix(double[][] array) {
-        if (array.length == 0 && array[0].length == 0) {
+        if (array.length == 0) {
             throw new IllegalArgumentException("Размер матрицы должен быть отличен от 0");
         }
-
+        int sum = 0;
+        for (double[] elements : array) {
+            sum += elements.length;
+        }
+        if (sum == 0) {
+            throw new IllegalArgumentException("Размер матрицы должен быть отличен от 0");
+        }
         this.rows = new Vector[array.length];
         int maxLength = array.length;
 
