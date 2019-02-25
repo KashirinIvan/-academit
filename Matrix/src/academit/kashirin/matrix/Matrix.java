@@ -31,15 +31,14 @@ public class Matrix {
             throw new IllegalArgumentException("Размер матрицы должен быть отличен от 0");
         }
         this.rows = new Vector[array.length];
-        int maxLength = array.length;
-        int sum = 0;
+        int maxLength = array[0].length;
+
         for (double[] component : array) {
-            sum += component.length;
             if (component.length > maxLength) {
                 maxLength = component.length;
             }
         }
-        if (sum == 0) {
+        if (maxLength == 0) {
             throw new IllegalArgumentException("Размер матрицы должен быть отличен от 0");
         }
         for (int i = 0; i < array.length; i++) {
