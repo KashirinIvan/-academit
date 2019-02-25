@@ -30,22 +30,18 @@ public class Matrix {
         if (array.length == 0) {
             throw new IllegalArgumentException("Размер матрицы должен быть отличен от 0");
         }
-        int sum = 0;
-        for (double[] elements : array) {
-            sum += elements.length;
-        }
-        if (sum == 0) {
-            throw new IllegalArgumentException("Размер матрицы должен быть отличен от 0");
-        }
         this.rows = new Vector[array.length];
         int maxLength = array.length;
-
+        int sum = 0;
         for (double[] component : array) {
+            sum += component.length;
             if (component.length > maxLength) {
                 maxLength = component.length;
             }
         }
-
+        if (sum == 0) {
+            throw new IllegalArgumentException("Размер матрицы должен быть отличен от 0");
+        }
         for (int i = 0; i < array.length; i++) {
             this.rows[i] = new Vector(maxLength, array[i]);
         }
