@@ -46,10 +46,10 @@ public class ArrayListHome {
 
         ArrayList<Integer> list3 = new ArrayList<>();
 
-        for (int i = 0; i < list2.size(); i++) {
-            boolean hasTest = list3.contains(list2.get(i));
+        for (Integer element : list2) {
+            boolean hasTest = list3.contains(element);
             if (!hasTest) {
-                list3.add(list2.get(i));
+                list3.add(element);
             }
         }
         System.out.println(list3.toString());
