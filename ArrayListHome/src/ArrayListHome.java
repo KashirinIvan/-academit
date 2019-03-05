@@ -24,8 +24,7 @@ public class ArrayListHome {
         list1.add(16);
 
         for (int i = 0; i < list1.size(); i++) {
-            Integer x = list1.get(i);
-            if (x % 2 == 0) {
+            if (list1.get(i) % 2 == 0) {
                 list1.remove(i);
                 i--;
             }
@@ -47,8 +46,7 @@ public class ArrayListHome {
         ArrayList<Integer> list3 = new ArrayList<>();
 
         for (Integer element : list2) {
-            boolean hasTest = list3.contains(element);
-            if (!hasTest) {
+            if (!list3.contains(element)) {
                 list3.add(element);
             }
         }
