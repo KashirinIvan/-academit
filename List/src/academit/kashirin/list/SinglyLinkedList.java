@@ -9,6 +9,7 @@ public class SinglyLinkedList<T> {
     }
 
     public T getValueFirstElement(){
-        
+
     }
 }
+ 
