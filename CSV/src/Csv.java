@@ -43,7 +43,8 @@ public class Csv {
                         writer.print("<br/>");
                     } else if (isLineBreak == 1) {
                         writer.print("</td></tr><tr><td>");
-                    } else if (isLineBreak == 3) {
+                    } else if (isLineBreak == 3){
+                        writer.print("");
                     }
                 }
                 writer.print("</td></tr></table></body></html>");
