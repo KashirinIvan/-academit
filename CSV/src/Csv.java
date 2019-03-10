@@ -17,7 +17,7 @@ public class Csv {
                     writer.print("<br/>");
                 }
                 for (int i = 0; i < stringInFile.length(); i++) {
-                    if (stringInFile.charAt(i) == '"' || isCell) {
+                    if ((stringInFile.charAt(i) == '"' || isCell) && (i < stringInFile.length() - 1)) {
                         if (stringInFile.charAt(i) == '"' && !isCell) {
                             i++;
                         }
@@ -27,16 +27,14 @@ public class Csv {
                             i++;
                         } else if (stringInFile.charAt(i) == '"' && stringInFile.charAt(i + 1) == ',') {
                             writer.print("</td><td>");
-                            i += 2;
+                            i++;
                             isCell = false;
                         } else {
                             writer.print(replaceCharacter(stringInFile.charAt(i)));
                         }
-                        if (i == stringInFile.length() - 1) {
-                            break;
-                        }
                     } else if (stringInFile.charAt(i) == ',') {
                         writer.print("</td><td>");
+                    } else if (stringInFile.charAt(i) == '"') {
                     } else {
                         writer.print(replaceCharacter(stringInFile.charAt(i)));
                     }
@@ -52,10 +50,15 @@ public class Csv {
     }
 
     private static String replaceCharacter(char x) {
-        if (x == '<') return ("&lt;");
-        else if (x == '>') return ("&gt;");
-        else if (x == '&') return ("&amp;");
-        else return String.valueOf(x);
+        if (x == '<') {
+            return "&lt;";
+        } else if (x == '>') {
+            return "&gt;";
+        } else if (x == '&') {
+            return "&amp;";
+        } else {
+            return String.valueOf(x);
+        }
 
     }
 }
