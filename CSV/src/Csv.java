@@ -35,6 +35,7 @@ public class Csv {
                     } else if (stringInFile.charAt(i) == ',') {
                         writer.print("</td><td>");
                     } else if (stringInFile.charAt(i) == '"') {
+                        writer.print("");
                     } else {
                         writer.print(replaceCharacter(stringInFile.charAt(i)));
                     }
