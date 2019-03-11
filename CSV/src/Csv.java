@@ -7,6 +7,7 @@ public class Csv {
             System.out.println("Количество файлов не верное, нужно передать 2 файла : 1 файл .csv и 2 файл .html");
             return;
         }
+
         try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
              PrintWriter writer = new PrintWriter(args[1])) {
             writer.print("<!DOCTYPE html><html><head><meta charset=\"utf-8\"/><title>CSV->HTML</title><style> table{border-collapse: collapse} td {border: 1px solid black;} </style></head><body><table><tr><td>");
@@ -35,7 +36,7 @@ public class Csv {
                     } else if (stringInFile.charAt(i) == ',') {
                         writer.print("</td><td>");
                     } else if (stringInFile.charAt(i) == '"') {
-                        writer.print("");
+                        i++;
                     } else {
                         writer.print(replaceCharacter(stringInFile.charAt(i)));
                     }
