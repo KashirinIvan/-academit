@@ -56,7 +56,7 @@ public class Main {
         System.out.println("Значение по индексу 1 = " + list.getValue(1));
         System.out.println("Значение по индексу 2 = " + list.getValue(2));
 
-        SinglyLinkedList<Integer> list1 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> list1;
         list1 = list.copy();
         System.out.println("Копирование списка");
         System.out.println("Размерность списка = " + list1.getListSize());
