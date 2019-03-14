@@ -13,44 +13,46 @@ public class SinglyLinkedList<T> {
 
     public T getHead() {
         if (head == null) {
-            throw new IllegalArgumentException("Список пуст");
+            throw new NullPointerException("Список пуст");
         }
         return head.getData();
     }
 
     public T getValue(int index) {
-        if (count < index) {
-            throw new IllegalArgumentException("Элемента с данным индексом не существует");
+        if (count < index && index < 0) {
+            throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         return getNode(index).getData();
     }
 
     public T setValue(int index, T data) {
-        if (count < index) {
-            throw new IllegalArgumentException("Элемента с данным индексом не существует");
+        if (count < index && index < 0) {
+            throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
-        T temp = getNode(index).getData();
-        getNode(index).setData(data);
+        ListItem<T> tempNode = getNode(index);
+        T temp = tempNode.getData();
+        tempNode.setData(data);
         return temp;
     }
 
     public T remove(int index) {
-        if (count < index) {
-            throw new IllegalArgumentException("Элемента с данным индексом не существует");
-        }
-        ListItem<T> p = head;
-        ListItem<T> prev = null;
-        for (int i = 0; i < index - 1; i++) {
-            prev = p;
-            p = p.getNext();
+        if (count < index && index < 0) {
+            throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         T temp;
-        if (p == null) {
-            prev.setNext(null);
+        ListItem<T> tempNode = getNode(index);
+        if (index == count - 1) {
+            index--;
+            temp = tempNode.getData();
+            tempNode.setNext(null);
+        } else if (index == 0) {
+            temp = tempNode.getData();
+            head = tempNode.getNext();
         } else {
-            prev.setNext(p.getNext());
+            index--;
+            temp = tempNode.getNext().getData();
+            tempNode.setNext(tempNode.getNext().getNext());
         }
-        temp = p.getData();
         count--;
         return temp;
     }
@@ -61,23 +63,31 @@ public class SinglyLinkedList<T> {
     }
 
     public void insertAt(int index, T data) {
-        if (count < index) {
-            throw new IllegalArgumentException("Элемента с данным индексом не существует");
+        if (count < index && index < 0) {
+            throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
-        ListItem<T> p = head;
-        ListItem<T> prev = null;
-        for (int i = 0; i < index - 1; i++) {
-            prev = p;
-            p = p.getNext();
+        ListItem<T> temp;
+        ListItem<T> tempNode;
+        if (index == count) {
+            index--;
+            tempNode = getNode(index);
+            temp = new ListItem<>(data, null);
+            tempNode.setNext(temp);
+        } else if (index == 0) {
+            temp = new ListItem<>(data, head);
+            head = temp;
+        } else {
+            index--;
+            tempNode = getNode(index);
+            temp = new ListItem<>(data, tempNode.getNext());
+            tempNode.setNext(temp);
         }
-        ListItem<T> temp = new ListItem<>(data, p);
-        prev.setNext(temp);
         count++;
     }
 
     public boolean removeNode(T data) {
         for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (p.getData().equals(data)) {
+            if (data.equals(p.getData())) {
                 if (p == null) {
                     prev.setNext(null);
                 } else {
@@ -91,6 +101,9 @@ public class SinglyLinkedList<T> {
     }
 
     public T removeTop() {
+        if (head == null) {
+            throw new NullPointerException("Список пуст");
+        }
         T temp = head.getData();
         head = head.getNext();
         count--;
@@ -112,16 +125,18 @@ public class SinglyLinkedList<T> {
 
     public SinglyLinkedList<T> copy() {
         SinglyLinkedList<T> list1 = new SinglyLinkedList<>();
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            list1.setHead(p.getData());
-        }
-        list1.invertList();
+        ListItem<T> p = head;
+        list1.head = new ListItem<>(p.getData());
+        ListItem<T> o =list1.head;
+        p=p.getNext();
+        list1.count++;
+
         return list1;
     }
 
     private ListItem<T> getNode(int index) {
         ListItem<T> p = head;
-        for (int i = 0; i < index - 1; i++) {
+        for (int i = 1; i <= index; i++) {
             p = p.getNext();
         }
         return p;
