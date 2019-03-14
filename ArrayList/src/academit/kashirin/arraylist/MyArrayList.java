@@ -129,7 +129,7 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         if (c.size() != 0) {
-            Iterator<Integer> iterator = (Iterator<Integer>) c.iterator();
+            Iterator<?> iterator = c.iterator();
             while (iterator.hasNext()) {
                 add(index, (T) iterator.next());
                 index++;
@@ -141,12 +141,31 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        boolean isRemove = false;
+        for (int i = 0; i < size(); i++) {
+            for (Object element : c) {
+                if (get(i).equals(element)) {
+                    remove(i);
+                    isRemove = true;
+                }
+            }
+        }
+        return isRemove;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        boolean isRemove = false;
+        Iterator<?> iterator = c.iterator();
+        while (iterator.hasNext()) {
+            for (int i = 0; i < size(); i++) {
+                if (!iterator.equals(get(i))) {
+                    remove(get(i));
+                    isRemove = true;
+                }
+            }
+        }
+        return isRemove;
     }
 
     @Override

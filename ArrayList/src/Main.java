@@ -54,5 +54,16 @@ public class Main {
 
         myArrayList.addAll(1,myArrayList1);
         System.out.println(Arrays.toString(myArrayList.toArray()));
+
+        System.out.println(myArrayList.removeAll(myArrayList1));
+        System.out.println(Arrays.toString(myArrayList.toArray()));
+
+        myArrayList.addAll(myArrayList1);
+        System.out.println(Arrays.toString(myArrayList.toArray()));
+        System.out.println(Arrays.toString(myArrayList1.toArray()));
+
+        System.out.println(myArrayList.retainAll(myArrayList1));
+        System.out.println(Arrays.toString(myArrayList.toArray()));
+
     }
 }
