@@ -126,11 +126,15 @@ public class SinglyLinkedList<T> {
     public SinglyLinkedList<T> copy() {
         SinglyLinkedList<T> list1 = new SinglyLinkedList<>();
         ListItem<T> p = head;
-        list1.head = new ListItem<>(p.getData());
-        ListItem<T> o =list1.head;
-        p=p.getNext();
-        list1.count++;
-
+        for (int i = 0; i < count; i++) {
+            list1.setHead(p.getData());
+            p = p.getNext();
+        }
+        ListItem<T> temp = list1.head;
+        for (p = head; p != null; p = p.getNext()) {
+            temp.setData(p.getData());
+            temp = temp.getNext();
+        }
         return list1;
     }
 
