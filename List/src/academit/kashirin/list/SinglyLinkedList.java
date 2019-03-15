@@ -19,14 +19,14 @@ public class SinglyLinkedList<T> {
     }
 
     public T getValue(int index) {
-        if (count < index && index < 0) {
+        if (count <= index || index < 0) {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         return getNode(index).getData();
     }
 
     public T setValue(int index, T data) {
-        if (count < index && index < 0) {
+        if (count < index || index < 0) {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         ListItem<T> tempNode = getNode(index);
@@ -36,49 +36,45 @@ public class SinglyLinkedList<T> {
     }
 
     public T remove(int index) {
-        if (count < index && index < 0) {
+        if (count <= index || index < 0) {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         T temp;
-        ListItem<T> tempNode = getNode(index);
+        ListItem<T> tempNode = getNode(index - 1);
         if (index == count - 1) {
-            index--;
-            temp = tempNode.getData();
+            temp = tempNode.getNext().getData();
             tempNode.setNext(null);
+            count--;
         } else if (index == 0) {
-            temp = tempNode.getData();
-            head = tempNode.getNext();
+            temp = removeTop();
         } else {
-            index--;
             temp = tempNode.getNext().getData();
             tempNode.setNext(tempNode.getNext().getNext());
+            count--;
         }
-        count--;
         return temp;
     }
 
-    public void setHead(T data) {
+    public void addFirst(T data) {
         head = new ListItem<>(data, head);
         count++;
     }
 
     public void insertAt(int index, T data) {
-        if (count < index && index < 0) {
+        if (count < index || index < 0) {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         ListItem<T> temp;
         ListItem<T> tempNode;
         if (index == count) {
-            index--;
-            tempNode = getNode(index);
+            tempNode = getNode(index-1);
             temp = new ListItem<>(data, null);
             tempNode.setNext(temp);
         } else if (index == 0) {
             temp = new ListItem<>(data, head);
             head = temp;
         } else {
-            index--;
-            tempNode = getNode(index);
+            tempNode = getNode(index-1);
             temp = new ListItem<>(data, tempNode.getNext());
             tempNode.setNext(temp);
         }
@@ -110,12 +106,11 @@ public class SinglyLinkedList<T> {
         return temp;
     }
 
-    public void invertList() {
+    public void invert() {
         ListItem<T> p = head;
         ListItem<T> temp = null;
-        ListItem<T> next;
         for (int i = 0; i < count; i++) {
-            next = p.getNext();
+            ListItem<T> next = p.getNext();
             p.setNext(temp);
             temp = p;
             p = next;
@@ -125,14 +120,9 @@ public class SinglyLinkedList<T> {
 
     public SinglyLinkedList<T> copy() {
         SinglyLinkedList<T> list1 = new SinglyLinkedList<>();
-        ListItem<T> p = head;
-        for (int i = 0; i < count; i++) {
-            list1.setHead(p.getData());
-            p = p.getNext();
-        }
-        ListItem<T> temp = list1.head;
-        for (p = head; p != null; p = p.getNext()) {
-            temp.setData(p.getData());
+        ListItem<T> temp = head;
+        for (ListItem<T> p = head; p != null; p = p.getNext()) {
+            list1.addFirst(p.getData());
             temp = temp.getNext();
         }
         return list1;
