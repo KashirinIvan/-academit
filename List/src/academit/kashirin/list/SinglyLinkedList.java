@@ -1,5 +1,7 @@
 package academit.kashirin.list;
 
+import java.util.Objects;
+
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
     private int count;
@@ -67,14 +69,14 @@ public class SinglyLinkedList<T> {
         ListItem<T> temp;
         ListItem<T> tempNode;
         if (index == count) {
-            tempNode = getNode(index-1);
+            tempNode = getNode(index - 1);
             temp = new ListItem<>(data, null);
             tempNode.setNext(temp);
         } else if (index == 0) {
             temp = new ListItem<>(data, head);
             head = temp;
         } else {
-            tempNode = getNode(index-1);
+            tempNode = getNode(index - 1);
             temp = new ListItem<>(data, tempNode.getNext());
             tempNode.setNext(temp);
         }
@@ -82,17 +84,17 @@ public class SinglyLinkedList<T> {
     }
 
     public boolean removeNode(T data) {
-        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (data.equals(p.getData())) {
-                if (p == null) {
-                    prev.setNext(null);
-                } else {
-                    prev.setNext(p.getNext());
-                }
+        if (Objects.equals(data, getHead())) {
+            removeTop();
+            return true;
+        }
+        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext())
+            if (Objects.equals(data, p.getData())) {
+                assert prev != null;
+                prev.setNext(p.getNext());
                 count--;
                 return true;
             }
-        }
         return false;
     }
 
@@ -120,11 +122,16 @@ public class SinglyLinkedList<T> {
 
     public SinglyLinkedList<T> copy() {
         SinglyLinkedList<T> list1 = new SinglyLinkedList<>();
-        ListItem<T> temp = head;
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            list1.addFirst(p.getData());
+        ListItem<T> firstNode = new ListItem<>(getHead(), null);
+        ListItem<T> temp = firstNode;
+        ListItem<T> node = head.getNext();
+        while (node != null) {
+            temp.setNext(new ListItem<>(node.getData()));
             temp = temp.getNext();
+            node = node.getNext();
         }
+        list1.head = firstNode;
+        list1.count = count;
         return list1;
     }
 

@@ -4,6 +4,7 @@ import academit.kashirin.list.SinglyLinkedList;
 
 public class Main {
     public static void main(String[] args) {
+
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
         list.addFirst(6);
         list.addFirst(5);
@@ -23,7 +24,7 @@ public class Main {
         System.out.println("Значение по индексу 1 = " + list.getValue(1));
         System.out.println("Значение по индексу 2 = " + list.getValue(2));
         System.out.println("Значение по индексу 3 = " + list.getValue(3));
-        System.out.println("Удаленное значение по индексу 3 = " + list.remove(0));
+        System.out.println("Удаленное значение по индексу 0 = " + list.remove(0));
         System.out.println("Размерность списка = " + list.getListSize());
         System.out.println("Значение по индексу 0 = " + list.getValue(0));
         System.out.println("Значение по индексу 1 = " + list.getValue(1));
@@ -35,7 +36,7 @@ public class Main {
         System.out.println("Значение по индексу 1 = " + list.getValue(1));
         System.out.println("Значение по индексу 2 = " + list.getValue(2));
         System.out.println("Значение по индексу 3 = " + list.getValue(3));
-        if (list.removeNode(9)) {
+        if (list.removeNode(1)) {
             System.out.println("Элемент найден и удачен");
         } else {
             System.out.println("Элемент не найден и не удачен");
@@ -66,11 +67,9 @@ public class Main {
         System.out.println("Значение по индексу 1 = " + list1.getValue(1));
         System.out.println("Значение по индексу 2 = " + list1.getValue(2));
 
-        System.out.println("Размерность списка = " + list.getListSize());
+
         list.insertAt(0, 55);
-        System.out.println("Размерность списка = " + list.getListSize());
         list.insertAt(3, 52);
-        System.out.println("Размерность списка = " + list.getListSize());
         list.insertAt(1, 30);
         System.out.println("Размерность списка = " + list.getListSize());
         System.out.println("Значение по индексу 0 = " + list1.getValue(0));
