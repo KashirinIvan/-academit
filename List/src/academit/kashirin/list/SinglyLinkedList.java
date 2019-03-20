@@ -9,7 +9,7 @@ public class SinglyLinkedList<T> {
     public SinglyLinkedList() {
     }
 
-    public int getListSize() {
+    public int getSize() {
         return count;
     }
 
@@ -28,7 +28,7 @@ public class SinglyLinkedList<T> {
     }
 
     public T setValue(int index, T data) {
-        if (count < index || index < 0) {
+        if (count <= index || index < 0) {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         ListItem<T> tempNode = getNode(index);
@@ -42,14 +42,10 @@ public class SinglyLinkedList<T> {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         T temp;
-        ListItem<T> tempNode = getNode(index - 1);
-        if (index == count - 1) {
-            temp = tempNode.getNext().getData();
-            tempNode.setNext(null);
-            count--;
-        } else if (index == 0) {
+        if (index == 0) {
             temp = removeTop();
         } else {
+            ListItem<T> tempNode = getNode(index - 1);
             temp = tempNode.getNext().getData();
             tempNode.setNext(tempNode.getNext().getNext());
             count--;
@@ -63,16 +59,12 @@ public class SinglyLinkedList<T> {
     }
 
     public void insertAt(int index, T data) {
-        if (count < index || index < 0) {
+        if (count <= index || index < 0) {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         ListItem<T> temp;
         ListItem<T> tempNode;
-        if (index == count) {
-            tempNode = getNode(index - 1);
-            temp = new ListItem<>(data, null);
-            tempNode.setNext(temp);
-        } else if (index == 0) {
+        if (index == 0) {
             temp = new ListItem<>(data, head);
             head = temp;
         } else {
@@ -84,17 +76,21 @@ public class SinglyLinkedList<T> {
     }
 
     public boolean removeNode(T data) {
+        if (head == null) {
+            return false;
+        }
         if (Objects.equals(data, getHead())) {
             removeTop();
             return true;
         }
-        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext())
+        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
             if (Objects.equals(data, p.getData())) {
                 assert prev != null;
                 prev.setNext(p.getNext());
                 count--;
                 return true;
             }
+        }
         return false;
     }
 
@@ -121,7 +117,10 @@ public class SinglyLinkedList<T> {
     }
 
     public SinglyLinkedList<T> copy() {
-        SinglyLinkedList<T> list1 = new SinglyLinkedList<>();
+        SinglyLinkedList<T> copy = new SinglyLinkedList<>();
+        if (head == null) {
+            return copy;
+        }
         ListItem<T> firstNode = new ListItem<>(getHead(), null);
         ListItem<T> temp = firstNode;
         ListItem<T> node = head.getNext();
@@ -130,9 +129,9 @@ public class SinglyLinkedList<T> {
             temp = temp.getNext();
             node = node.getNext();
         }
-        list1.head = firstNode;
-        list1.count = count;
-        return list1;
+        copy.head = firstNode;
+        copy.count = count;
+        return copy;
     }
 
     private ListItem<T> getNode(int index) {
