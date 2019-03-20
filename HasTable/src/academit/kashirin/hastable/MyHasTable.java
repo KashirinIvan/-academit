@@ -1,17 +1,14 @@
 package academit.kashirin.hastable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 public class MyHasTable<T> implements Collection<T> {
-    private ArrayList<T>[] hashItems;
+    private List<T>[] hashItems;
     private int length;
     private int modCount = 0;
 
     public MyHasTable() {
-        hashItems = new ArrayList<T>();
+        hashItems = new ArrayList[10];
         length = 0;
     }
 

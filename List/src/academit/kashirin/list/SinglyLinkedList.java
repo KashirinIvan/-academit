@@ -82,7 +82,7 @@ public class SinglyLinkedList<T> {
             removeTop();
             return true;
         }
-        for (ListItem<T> p = head.getNext(), prev = null; p != null; prev = p, p = p.getNext()) {
+        for (ListItem<T> p = head.getNext(), prev = head; p != null; prev = p, p = p.getNext()) {
             if (Objects.equals(data, p.getData())) {
                 assert prev != null;
                 prev.setNext(p.getNext());
