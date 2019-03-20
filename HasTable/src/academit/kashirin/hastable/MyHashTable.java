@@ -2,12 +2,12 @@ package academit.kashirin.hastable;
 
 import java.util.*;
 
-public class MyHasTable<T> implements Collection<T> {
-    private List<T>[] hashItems;
+public class MyHashTable<T> implements Collection<T> {
+    private ArrayList<T>[] hashItems;
     private int length;
     private int modCount = 0;
 
-    public MyHasTable() {
+    public MyHashTable() {
         hashItems = new ArrayList[10];
         length = 0;
     }
@@ -49,6 +49,7 @@ public class MyHasTable<T> implements Collection<T> {
     @Override
     public boolean add(T t) {
         int hash = getHasCode(t);
+        hashItems[hash] = new ArrayList<>();
         hashItems[hash].add(t);
         return false;
     }
