@@ -1,6 +1,9 @@
+import academit.kashirin.hastable.MyHasTable;
+
 public class Main {
-    private static void main(String[] args) {
+    public static void main(String[] args) {
+        MyHasTable<String> hasTable = new MyHasTable<>();
 
-
+        hasTable.add("Привет");
     }
 }

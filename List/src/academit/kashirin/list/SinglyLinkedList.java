@@ -59,16 +59,15 @@ public class SinglyLinkedList<T> {
     }
 
     public void insertAt(int index, T data) {
-        if (count <= index || index < 0) {
+        if (count < index || index < 0) {
             throw new IndexOutOfBoundsException("Элемента с данным индексом не существует");
         }
         ListItem<T> temp;
-        ListItem<T> tempNode;
         if (index == 0) {
             temp = new ListItem<>(data, head);
             head = temp;
         } else {
-            tempNode = getNode(index - 1);
+            ListItem<T> tempNode = getNode(index - 1);
             temp = new ListItem<>(data, tempNode.getNext());
             tempNode.setNext(temp);
         }
@@ -83,7 +82,7 @@ public class SinglyLinkedList<T> {
             removeTop();
             return true;
         }
-        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
+        for (ListItem<T> p = head.getNext(), prev = null; p != null; prev = p, p = p.getNext()) {
             if (Objects.equals(data, p.getData())) {
                 assert prev != null;
                 prev.setNext(p.getNext());
