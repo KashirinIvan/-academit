@@ -61,8 +61,8 @@ public class Main {
         System.out.println("Лист = " + Arrays.toString(myArrayList.toArray()));
 
 
-     /*  Integer[] array = new Integer[myArrayList.size()];
-        array = myArrayList.toArray(array);
-        System.out.println("toArray[(T1[] a]" + Arrays.toString(array));*/
+        Integer[] array = new Integer[myArrayList.size()];
+        array= myArrayList.toArray(array);
+        System.out.println("Лист = " + Arrays.toString(array));
     }
 }

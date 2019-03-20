@@ -60,7 +60,8 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return (T1[]) toArray();
+        System.arraycopy(items, 0, a, 0, length);
+        return a;
     }
 
     @Override
@@ -149,19 +150,24 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
+        if (c.size() == 0) {
+            return false;
+        }
         boolean isRemove = false;
-        for (int i=0;i<size();i++) {
+        for (int i = 0; i < size(); i++) {
             Iterator<T> iterator = (Iterator<T>) c.iterator();
             while (iterator.hasNext()) {
-                if (!Objects.equals(iterator.next(), items[i])) {
-                    remove(i);
-                                isRemove = true;
+                if (Objects.equals(iterator.next(), items[i])) {
+                    isRemove = true;
                 }
-
             }
-            i--;
+            if (!isRemove) {
+                remove(i);
+                i--;
+            }
+            isRemove = false;
         }
-        return isRemove;
+        return true;
     }
 
     @Override
