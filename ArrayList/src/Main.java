@@ -57,12 +57,18 @@ public class Main {
         myArrayList.add(43);
         System.out.println("Лист = " + Arrays.toString(myArrayList.toArray()));
         System.out.println("Лист1 = " + Arrays.toString(myArrayList1.toArray()));
-        System.out.println("Удаление элементов из листа не принадлежащих лист1 = " + myArrayList.retainAll(myArrayList1));
+
+    //    System.out.println("Удаление элементов из листа не принадлежащих лист1 = " + myArrayList.retainAll(myArrayList1));
         System.out.println("Лист = " + Arrays.toString(myArrayList.toArray()));
 
 
         Integer[] array = new Integer[myArrayList.size()];
         array= myArrayList.toArray(array);
         System.out.println("Лист = " + Arrays.toString(array));
+
+        myArrayList.trimToSize();
+        System.out.println(myArrayList.toString());
+        myArrayList.ensureCapacity(10);
+        System.out.println(myArrayList.toString());
     }
 }
