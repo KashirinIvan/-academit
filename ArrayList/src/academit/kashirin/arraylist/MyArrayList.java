@@ -166,21 +166,15 @@ public class MyArrayList<T> implements List<T> {
         }
         boolean isRetain = false;
         for (int i = 0; i < size(); i++) {
-            for (Object element : c) {
-                if (!Objects.equals(element, items[i])) {
-                    isRetain = true;
-                } else {
-                    i++;
-                    break;
-                }
-            }
-            if (isRetain) {
+            if (c.contains(items[i])) {
+                i++;
+            } else {
                 remove(i);
                 i--;
-                isRetain = false;
+                isRetain = true;
             }
         }
-        return true;
+        return isRetain;
     }
 
     @Override

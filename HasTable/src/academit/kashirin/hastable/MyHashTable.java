@@ -28,18 +28,12 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public boolean contains(Object o) {
-        for (int i = 0; i < hashItems.length; i++) {
-            if (hashItems[i] != null) {
-                if (Objects.equals(hashItems[i].get(0), o)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        int hash = getHasCode((T) o);
+        return hashItems[hash].contains(o);
     }
 
     @Override
-    public Iterator<T> iterator()  {
+    public Iterator<T> iterator() {
         return new MyListIterator();
     }
 
@@ -60,9 +54,10 @@ public class MyHashTable<T> implements Collection<T> {
                 throw new NoSuchElementException("Коллекция закончилась");
             }
             ++currentIndex;
-            return (T) hashItems[currentIndex];
+            return (T) hashItems[currentIndex].get();
         }
     }
+
     @Override
     public Object[] toArray() {
         Object[] temp = new Object[countList];
@@ -98,15 +93,12 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public boolean remove(Object o) {
-        for (int i = 0; i < hashItems.length; i++) {
-            if (hashItems[i] != null) {
-                for (T element : hashItems[i]) {
-                    if (Objects.equals(element, o)) {
-                        hashItems[i].remove(o);
-                        length--;
-                        return true;
-                    }
-                }
+        int hash = getHasCode((T) o);
+        for (T element : hashItems[hash]) {
+            if (Objects.equals(element, o)) {
+                hashItems[hash].remove(o);
+                length--;
+                return true;
             }
         }
         return false;

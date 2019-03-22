@@ -34,7 +34,7 @@ public class Main {
         ArrayList<String> list = new ArrayList();
         list.add("Второй");
         list.add("Шестой");
-        System.out.println("Входит ли list в hashTable = " + hashTable.contains(list));
+        System.out.println("Входит ли list в hashTable = " + hashTable.containsAll(list));
         System.out.println(hashTable.toString());
     }
 }
