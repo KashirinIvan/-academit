@@ -142,18 +142,15 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        boolean isRemove = false;
-        for (Object element : c) {
-            while (length != 0) {
-                if (contains(element)) {
-                    remove(element);
-                    isRemove = true;
-                } else {
-                    break;
-                }
+        boolean isRetain = false;
+        for (int i = 0; i < size(); i++) {
+            if (c.contains(items[i])) {
+                remove(i);
+                i--;
+                isRetain = true;
             }
         }
-        return isRemove;
+        return isRetain;
     }
 
     @Override
