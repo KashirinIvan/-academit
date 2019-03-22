@@ -61,9 +61,7 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        if (a.length > 0) {
-            a[0] = null;
-        }
+        a = (T1[]) Arrays.copyOf(items, length);
         return a;
     }
 
@@ -166,15 +164,21 @@ public class MyArrayList<T> implements List<T> {
             }
             return true;
         }
+        boolean isRetain = false;
         for (int i = 0; i < size(); i++) {
             for (Object element : c) {
-                if (contains(element)) {
-
-                    remove(i);
+                if (!Objects.equals(element, items[i])) {
+                    isRetain = true;
+                } else {
+                    i++;
                     break;
                 }
             }
-            i--;
+            if (isRetain) {
+                remove(i);
+                i--;
+                isRetain = false;
+            }
         }
         return true;
     }
