@@ -27,14 +27,26 @@ public class Main {
         System.out.println("Количество элементов в таблице = " + hashTable.size());
         System.out.println(Arrays.toString(hashTable.toArray()));
 
-       /* Iterator<String> iterator = hashTable.iterator();
+        Iterator<String> iterator = hashTable.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
-        }*/
+        }
         ArrayList<String> list = new ArrayList();
         list.add("Второй");
-        list.add("Шестой");
+        list.add("Двенадцатый");
         System.out.println("Входит ли list в hashTable = " + hashTable.containsAll(list));
+
+        System.out.println("addAll = " + hashTable.addAll(list));
+        System.out.println(Arrays.toString(hashTable.toArray()));
+
+        System.out.println("removeAll = " + hashTable.removeAll(list));
+        System.out.println(Arrays.toString(hashTable.toArray()));
+
+        System.out.println("addAll = " + hashTable.addAll(list));
+        System.out.println(Arrays.toString(hashTable.toArray()));
+
+        System.out.println("removeAll = " + hashTable.retainAll(list));
+        System.out.println(Arrays.toString(hashTable.toArray()));
         System.out.println(hashTable.toString());
     }
 }

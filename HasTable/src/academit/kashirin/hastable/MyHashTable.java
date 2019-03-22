@@ -41,6 +41,8 @@ public class MyHashTable<T> implements Collection<T> {
         private int modCountSave = modCount;
 
         private int currentIndex = -1;
+        private int countListItems = 0;
+        private int countItems = -1;
 
         public boolean hasNext() {
             return currentIndex + 1 < length;
@@ -53,8 +55,20 @@ public class MyHashTable<T> implements Collection<T> {
             if (!hasNext()) {
                 throw new NoSuchElementException("Коллекция закончилась");
             }
-            ++currentIndex;
-            return (T) hashItems[currentIndex].get();
+            if (hashItems[countListItems] != null) {
+                ++currentIndex;
+                ++countItems;
+                if (hashItems[countListItems].size() == countItems) {
+                    ++countListItems;
+                    countItems = 0;
+                    if (hashItems[countListItems] == null) {
+                        while (hashItems[countListItems] == null && countListItems < hashItems.length) {
+                            ++countListItems;
+                        }
+                    }
+                }
+            }
+            return hashItems[countListItems].get(countItems);
         }
     }
 
@@ -116,17 +130,44 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        for (Object element : c) {
+            add((T) element);
+        }
+        return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        boolean isRetain = false;
+        for (int i = 0; i < size(); i++) {
+            if (hashItems[i] != null) {
+                for (int j = 0; j < hashItems[i].size(); j++) {
+                    if (c.contains(hashItems[i].get(j))) {
+                        remove(hashItems[i].get(j));
+                        j--;
+                        isRetain = true;
+                    }
+                }
+            }
+        }
+        return isRetain;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        boolean isRetain = false;
+        for (int i = 0; i < size(); i++) {
+            if (hashItems[i] != null) {
+                for (int j = 0; j < hashItems[i].size(); j++) {
+                    if (!c.contains(hashItems[i].get(j))) {
+                        remove(hashItems[i].get(j));
+                        j--;
+                        isRetain = true;
+                    }
+                }
+            }
+        }
+        return isRetain;
     }
 
     @Override
