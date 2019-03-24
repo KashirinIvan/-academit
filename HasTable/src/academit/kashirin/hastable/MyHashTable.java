@@ -9,10 +9,11 @@ public class MyHashTable<T> implements Collection<T> {
     private int modCount = 0;
 
     public MyHashTable() {
+        //noinspection unchecked
         hashItems = new ArrayList[10];
     }
 
-    public int getHasCode(T value) {
+    private int getHasCode(T value) {
         return Math.abs(value.hashCode() % hashItems.length);
     }
 
@@ -62,7 +63,7 @@ public class MyHashTable<T> implements Collection<T> {
                     ++countListItems;
                     countItems = 0;
                     if (hashItems[countListItems] == null) {
-                        while (hashItems[countListItems] == null && countListItems < hashItems.length) {
+                        while (hashItems[countListItems] == null) {
                             ++countListItems;
                         }
                     }
@@ -76,9 +77,9 @@ public class MyHashTable<T> implements Collection<T> {
     public Object[] toArray() {
         Object[] temp = new Object[countList];
         int j = 0;
-        for (int i = 0; i < hashItems.length; i++) {
-            if (hashItems[i] != null) {
-                temp[j] = hashItems[i];
+        for (ArrayList<T> hashItem : hashItems) {
+            if (hashItem != null) {
+                temp[j] = hashItem;
                 j++;
             }
         }
