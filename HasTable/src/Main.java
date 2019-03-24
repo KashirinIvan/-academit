@@ -23,7 +23,7 @@ public class Main {
         System.out.println("Проверка есть ли Первый = " + hashTable.contains("Первый"));
         System.out.println("Проверка есть ли Двенадцатый = " + hashTable.contains("Двенадцатый"));
         System.out.println(Arrays.toString(hashTable.toArray()));
-        System.out.println("Удалить Первый = " + hashTable.remove("Третий"));
+        System.out.println("Удалить Третий = " + hashTable.remove("Третий"));
         System.out.println("Количество элементов в таблице = " + hashTable.size());
         System.out.println(Arrays.toString(hashTable.toArray()));
 
@@ -45,8 +45,17 @@ public class Main {
         System.out.println("addAll = " + hashTable.addAll(list));
         System.out.println(Arrays.toString(hashTable.toArray()));
 
-        System.out.println("removeAll = " + hashTable.retainAll(list));
+        System.out.println("retainAll = " + hashTable.retainAll(list));
         System.out.println(Arrays.toString(hashTable.toArray()));
+
+        Object[] array = new Object[hashTable.size()];
+        array = hashTable.toArray(array);
+        System.out.println("Hash массив = " + Arrays.toString(array));
+
+        System.out.println("clear");
+        hashTable.clear();
+        System.out.println(Arrays.toString(hashTable.toArray()));
+
         System.out.println(hashTable.toString());
     }
 }

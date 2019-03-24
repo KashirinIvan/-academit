@@ -1,6 +1,6 @@
 package academit.kashirin.arraylist;
 
-import java.io.IOException;
+import javax.naming.SizeLimitExceededException;
 import java.util.*;
 
 public class MyArrayList<T> implements List<T> {
@@ -61,7 +61,12 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        a = (T1[]) Arrays.copyOf(items, length);
+        if (a.length >= length) {
+            a = (T1[]) Arrays.copyOf(items, length + 1);
+            a[a.length - 1] = null;
+        } else {
+            a = (T1[]) Arrays.copyOf(items, length, Object[].class);
+        }
         return a;
     }
 
@@ -83,7 +88,7 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public boolean remove(Object o) {
         for (int i = 0; i < length; i++) {
-            if (Objects.equals(get(i), o)) {
+            if (Objects.equals(items[i], o)) {
                 System.arraycopy(items, i + 1, items, i, length - i - 1);
                 length--;
                 modCount++;
@@ -108,14 +113,12 @@ public class MyArrayList<T> implements List<T> {
         if (c.isEmpty()) {
             return false;
         }
-        if ((items.length - length) < c.size()) {
-            items = Arrays.copyOf(items, length + c.size());
-        }
+        ensureCapacity(length + c.size());
         for (T element : c) {
             items[length] = element;
             length++;
-            modCount++;
         }
+        modCount++;
         return true;
     }
 
@@ -127,45 +130,40 @@ public class MyArrayList<T> implements List<T> {
         if (c.isEmpty()) {
             return false;
         }
-        if ((items.length - length) < c.size()) {
-            items = Arrays.copyOf(items, length + c.size());
-        }
-        System.arraycopy(items, index, items, index + c.size(), length - index + 1);
+        ensureCapacity(length + c.size());
+        System.arraycopy(items, index, items, index + c.size(), length - index);
         for (T element : c) {
             items[index] = element;
             index++;
-            length++;
-            modCount++;
         }
+        length += c.size();
+        modCount++;
         return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        boolean isRetain = false;
+        boolean isRemove = false;
         for (int i = 0; i < size(); i++) {
             if (c.contains(items[i])) {
                 remove(i);
                 i--;
-                isRetain = true;
+                isRemove = true;
             }
         }
-        return isRetain;
+        return isRemove;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
         if (c.isEmpty()) {
-            for (int i = 0; i < size(); i++) {
-                remove(0);
-            }
-            return true;
+            clear();
+            return false;
         }
         boolean isRetain = false;
         for (int i = 0; i < size(); i++) {
-            if (c.contains(items[i])) {
-                i++;
-            } else {
+            isRetain = false;
+            if (!c.contains(items[i])) {
                 remove(i);
                 i--;
                 isRetain = true;
@@ -208,7 +206,7 @@ public class MyArrayList<T> implements List<T> {
             increaseCapacity();
         }
         if (index < length) {
-            System.arraycopy(items, index, items, index + 1, length - index + 1);
+            System.arraycopy(items, index, items, index + 1, length - index);
             items[index] = element;
         }
         length++;
@@ -241,7 +239,7 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = length; i >= 0; i--) {
+        for (int i = length - 1; i >= 0; i--) {
             if (Objects.equals(o, items[i])) {
                 return i;
             }
@@ -266,26 +264,30 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public String toString() {
-        return Arrays.toString(Arrays.copyOf(items, length));
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (T element : items) {
+            if (element != null) {
+                joiner.add(element.toString());
+            }
+        }
+        return joiner.toString();
     }
 
     public void trimToSize() {
         if (length == 0) {
             return;
         }
-        if (items.length / length > 2) {
-            items = Arrays.copyOf(items, length);
-        }
+        items = Arrays.copyOf(items, length);
     }
 
     public void ensureCapacity(int capacity) {
         if (length > capacity) {
             try {
-                throw new IOException("Количество элементов списка больше");
-            } catch (IOException e) {
+                throw new SizeLimitExceededException("Количество элементов списка больше");
+            } catch (SizeLimitExceededException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if (items.length < capacity) {
             items = Arrays.copyOf(items, capacity);
         }
     }

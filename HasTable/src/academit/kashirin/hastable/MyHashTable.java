@@ -87,7 +87,13 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+        if (a.length >= length) {
+            a = (T1[]) Arrays.copyOf(hashItems, hashItems.length + 1);
+            a[a.length - 1] = null;
+        } else {
+            a = (T1[]) Arrays.copyOf(hashItems, hashItems.length, Object[].class);
+        }
+        return a;
     }
 
     @Override
@@ -148,6 +154,10 @@ public class MyHashTable<T> implements Collection<T> {
                         isRetain = true;
                     }
                 }
+                if (hashItems[i].size() == 0) {
+                    hashItems[i] = null;
+                    countList--;
+                }
             }
         }
         return isRetain;
@@ -156,7 +166,7 @@ public class MyHashTable<T> implements Collection<T> {
     @Override
     public boolean retainAll(Collection<?> c) {
         boolean isRetain = false;
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < hashItems.length; i++) {
             if (hashItems[i] != null) {
                 for (int j = 0; j < hashItems[i].size(); j++) {
                     if (!c.contains(hashItems[i].get(j))) {
@@ -165,6 +175,10 @@ public class MyHashTable<T> implements Collection<T> {
                         isRetain = true;
                     }
                 }
+                if (hashItems[i].size() == 0) {
+                    hashItems[i] = null;
+                    countList--;
+                }
             }
         }
         return isRetain;
@@ -172,10 +186,19 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public void clear() {
-
+        length = 0;
+        Arrays.fill(hashItems, null);
+        modCount++;
+        countList = 0;
     }
 
     public String toString() {
-        return Arrays.toString(hashItems);
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (ArrayList<T> element : hashItems) {
+            if (element != null) {
+                joiner.add(element.toString());
+            }
+        }
+        return joiner.toString();
     }
 }
