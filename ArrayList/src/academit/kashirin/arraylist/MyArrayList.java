@@ -61,11 +61,13 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        if (a.length >= length) {
-            a = (T1[]) Arrays.copyOf(items, length + 1);
-            a[a.length - 1] = null;
+        if (a.length >= length + 1) {
+            for (int i = 0; i < length; i++) {
+                a[i] = (T1) items[i];
+            }
+            a[length] = null;
         } else {
-            a = (T1[]) Arrays.copyOf(items, length, Object[].class);
+            a = (T1[]) Arrays.copyOf(items, length, a.getClass());
         }
         return a;
     }
@@ -114,10 +116,12 @@ public class MyArrayList<T> implements List<T> {
             return false;
         }
         ensureCapacity(length + c.size());
+        int index = length;
         for (T element : c) {
-            items[length] = element;
-            length++;
+            items[index] = element;
+            index++;
         }
+        length += c.size();
         modCount++;
         return true;
     }
@@ -132,9 +136,10 @@ public class MyArrayList<T> implements List<T> {
         }
         ensureCapacity(length + c.size());
         System.arraycopy(items, index, items, index + c.size(), length - index);
+        int indexTemp = index;
         for (T element : c) {
-            items[index] = element;
-            index++;
+            items[indexTemp] = element;
+            indexTemp++;
         }
         length += c.size();
         modCount++;
@@ -158,11 +163,10 @@ public class MyArrayList<T> implements List<T> {
     public boolean retainAll(Collection<?> c) {
         if (c.isEmpty()) {
             clear();
-            return false;
+            return true;
         }
         boolean isRetain = false;
         for (int i = 0; i < size(); i++) {
-            isRetain = false;
             if (!c.contains(items[i])) {
                 remove(i);
                 i--;
@@ -268,6 +272,8 @@ public class MyArrayList<T> implements List<T> {
         for (T element : items) {
             if (element != null) {
                 joiner.add(element.toString());
+            } else {
+                joiner.add("null");
             }
         }
         return joiner.toString();
@@ -277,17 +283,13 @@ public class MyArrayList<T> implements List<T> {
         if (length == 0) {
             return;
         }
-        items = Arrays.copyOf(items, length);
+        if (items.length > length) {
+            items = Arrays.copyOf(items, length);
+        }
     }
 
     public void ensureCapacity(int capacity) {
-        if (length > capacity) {
-            try {
-                throw new SizeLimitExceededException("Количество элементов списка больше");
-            } catch (SizeLimitExceededException e) {
-                e.printStackTrace();
-            }
-        } else if (items.length < capacity) {
+        if (items.length < capacity) {
             items = Arrays.copyOf(items, capacity);
         }
     }

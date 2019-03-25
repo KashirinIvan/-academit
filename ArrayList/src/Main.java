@@ -62,9 +62,9 @@ public class Main {
         System.out.println("Лист = " + Arrays.toString(myArrayList.toArray()));
 
 
-        Object[] array = new Object[myArrayList.size()-1];
+        Object[] array = new Object[myArrayList.size()+1];
         array = myArrayList.toArray(array);
-        System.out.println("Лист = " + Arrays.toString(array));
+        System.out.println("Лист toArray = " + Arrays.toString(array));
 
         myArrayList.trimToSize();
         System.out.println(myArrayList.toString());
