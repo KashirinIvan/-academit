@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Person> people = new ArrayList();
+        @SuppressWarnings("unchecked") ArrayList<Person> people = new ArrayList();
 
         people.add(new Person("Иван", 27));
         people.add(new Person("Денис", 25));
@@ -25,34 +25,34 @@ public class Main {
         System.out.println(people.toString());
 
         System.out.println("Список уникальных имен: " + people.stream()
-                .map(p -> p.getName())
+                .map(Person::getName)
                 .distinct()
                 .collect(Collectors.joining(", ")));
 
         System.out.println("Список людей младше 18: " + people.stream()
                 .filter(p -> p.getAge() < 18)
-                .map(p -> p.getName())
+                .map(Person::getName)
                 .collect(Collectors.joining(", ")));
 
         System.out.println("Средний возраст людей младше 18 = " + people.stream()
                 .filter(p -> p.getAge() < 18)
-                .mapToDouble(p -> p.getAge())
+                .mapToDouble(Person::getAge)
                 .average()
-                .getAsDouble());
+                .isPresent());
 
         Map<String, Double> personsByAge = people.stream()
                 .collect(Collectors
-                        .groupingBy(p -> p.getName(),
+                        .groupingBy(Person::getName,
                                 Collectors
-                                        .averagingDouble(p -> p.getAge())));
+                                        .averagingDouble(Person::getAge)));
 
         personsByAge.forEach((p, age) -> System.out.printf("%s: %s%n", p, age));
 
         System.out.println("Возраст от 20 до 45 = " + people.stream()
                 .filter(p -> p.getAge() > 20 && p.getAge() < 45)
-                .sorted(Comparator.comparingInt((Person p) -> p.getAge())
+                .sorted(Comparator.comparingInt(Person::getAge)
                         .reversed())
-                .map(p -> p.getName())
+                .map(Person::getName)
                 .collect(Collectors.joining(", ")));
     }
 }
