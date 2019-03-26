@@ -1,4 +1,4 @@
-import academit.kashirin.hastable.MyHashTable;
+import academit.kashirin.hashtable.MyHashTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,13 +34,14 @@ public class Main {
         ArrayList<String> list = new ArrayList();
         list.add("Второй");
         list.add("Двенадцатый");
+        list.add("Шестой");
         System.out.println("Входит ли list в hashTable = " + hashTable.containsAll(list));
 
         System.out.println("addAll = " + hashTable.addAll(list));
         System.out.println(Arrays.toString(hashTable.toArray()));
 
         System.out.println("removeAll = " + hashTable.removeAll(list));
-        System.out.println(Arrays.toString(hashTable.toArray()));
+          System.out.println(Arrays.toString(hashTable.toArray()));
 
         System.out.println("addAll = " + hashTable.addAll(list));
         System.out.println(Arrays.toString(hashTable.toArray()));
@@ -55,7 +56,5 @@ public class Main {
         System.out.println("clear");
         hashTable.clear();
         System.out.println(Arrays.toString(hashTable.toArray()));
-
-        System.out.println(hashTable.toString());
     }
 }

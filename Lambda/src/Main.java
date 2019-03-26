@@ -24,14 +24,35 @@ public class Main {
 
         System.out.println(people.toString());
 
-        System.out.println("Список уникальных имен: " + people.stream().map(p -> p.getName()).distinct().collect(Collectors.joining(", ")));
-        System.out.println("Список людей младше 18: " + people.stream().filter(p -> p.getAge() < 18).map(p -> p.getName()).collect(Collectors.joining(", ")));
-        System.out.println("Средний возраст людей младше 18 = " + people.stream().filter(p -> p.getAge() < 18).mapToDouble(p -> p.getAge()).average().getAsDouble());
+        System.out.println("Список уникальных имен: " + people.stream()
+                .map(p -> p.getName())
+                .distinct()
+                .collect(Collectors.joining(", ")));
 
-        Map<String, Double> personsByAge = people.stream().collect(Collectors.groupingBy(p->p.getName(), Collectors.averagingDouble(p->p.getAge())));
+        System.out.println("Список людей младше 18: " + people.stream()
+                .filter(p -> p.getAge() < 18)
+                .map(p -> p.getName())
+                .collect(Collectors.joining(", ")));
+
+        System.out.println("Средний возраст людей младше 18 = " + people.stream()
+                .filter(p -> p.getAge() < 18)
+                .mapToDouble(p -> p.getAge())
+                .average()
+                .getAsDouble());
+
+        Map<String, Double> personsByAge = people.stream()
+                .collect(Collectors
+                        .groupingBy(p -> p.getName(),
+                                Collectors
+                                        .averagingDouble(p -> p.getAge())));
+
         personsByAge.forEach((p, age) -> System.out.printf("%s: %s%n", p, age));
 
-        System.out.println("Возраст от 20 до 45 = " + people.stream().filter(p -> p.getAge() > 20 && p.getAge() < 45).sorted(Comparator.comparingInt((Person p)->p.getAge()).reversed()).map(p -> p.getName()).collect(Collectors.joining(", ")));
-
+        System.out.println("Возраст от 20 до 45 = " + people.stream()
+                .filter(p -> p.getAge() > 20 && p.getAge() < 45)
+                .sorted(Comparator.comparingInt((Person p) -> p.getAge())
+                        .reversed())
+                .map(p -> p.getName())
+                .collect(Collectors.joining(", ")));
     }
 }

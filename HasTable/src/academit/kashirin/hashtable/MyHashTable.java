@@ -1,11 +1,10 @@
-package academit.kashirin.hastable;
+package academit.kashirin.hashtable;
 
 import java.util.*;
 
 public class MyHashTable<T> implements Collection<T> {
     private ArrayList<T>[] hashItems;
     private int length;
-    private int countList;
     private int modCount = 0;
 
     public MyHashTable() {
@@ -13,7 +12,10 @@ public class MyHashTable<T> implements Collection<T> {
         hashItems = new ArrayList[10];
     }
 
-    private int getHasCode(T value) {
+    private int getHashCode(Object value) {
+        if (value == null) {
+            return 0;
+        }
         return Math.abs(value.hashCode() % hashItems.length);
     }
 
@@ -29,7 +31,10 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public boolean contains(Object o) {
-        int hash = getHasCode((T) o);
+        int hash = getHashCode(o);
+        if (hashItems[hash] == null) {
+            return false;
+        }
         return hashItems[hash].contains(o);
     }
 
@@ -68,6 +73,12 @@ public class MyHashTable<T> implements Collection<T> {
                         }
                     }
                 }
+            } else {
+                while (hashItems[countListItems] == null) {
+                    ++countListItems;
+                    ++currentIndex;
+                    countItems = 0;
+                }
             }
             return hashItems[countListItems].get(countItems);
         }
@@ -75,54 +86,54 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public Object[] toArray() {
-        Object[] temp = new Object[countList];
+        Object[] temp = new Object[length];
         int j = 0;
-        for (ArrayList<T> hashItem : hashItems) {
-            if (hashItem != null) {
-                temp[j] = hashItem;
-                j++;
-            }
+        for (T hashItem : this) {
+            temp[j] = hashItem;
+            j++;
         }
         return temp;
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        if (a.length >= length) {
-            a = (T1[]) Arrays.copyOf(hashItems, hashItems.length + 1);
-            a[a.length - 1] = null;
+        if (a.length >= length + 1) {
+            for (int i = 0; i < length; i++) {
+                a[i] = (T1) hashItems[i];
+            }
+            a[length] = null;
         } else {
-            a = (T1[]) Arrays.copyOf(hashItems, hashItems.length, Object[].class);
+            a = (T1[]) Arrays.copyOf(hashItems, hashItems.length, a.getClass());
         }
         return a;
     }
 
     @Override
     public boolean add(T t) {
-        int hash = getHasCode(t);
-        while (hashItems[hash] != null) {
+        int hash = getHashCode(t);
+        if (hashItems[hash] != null) {
             hashItems[hash].add(t);
             length++;
+            modCount++;
             return true;
         }
         hashItems[hash] = new ArrayList<>();
         hashItems[hash].add(t);
-        countList++;
         length++;
+        modCount++;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        int hash = getHasCode((T) o);
-        for (T element : hashItems[hash]) {
-            if (Objects.equals(element, o)) {
-                hashItems[hash].remove(o);
-                length--;
-                return true;
-            }
+        int hash = getHashCode(o);
+        if (hashItems[hash] == null) {
+            return false;
         }
-        return false;
+        boolean isRemove = hashItems[hash].remove(o);
+        length--;
+        modCount++;
+        return isRemove;
     }
 
     @Override
@@ -137,31 +148,29 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        for (Object element : c) {
-            add((T) element);
+        for (T element : c) {
+            add(element);
         }
         return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        boolean isRetain = false;
-        for (int i = 0; i < size(); i++) {
+        boolean isRemove = false;
+        for (int i = 0; i < hashItems.length; i++) {
             if (hashItems[i] != null) {
-                for (int j = 0; j < hashItems[i].size(); j++) {
-                    if (c.contains(hashItems[i].get(j))) {
-                        remove(hashItems[i].get(j));
-                        j--;
-                        isRetain = true;
+                int tempSize = hashItems[i].size();
+                if (hashItems[i].removeAll(c)) {
+                    length -= tempSize - hashItems[i].size();
+                    modCount++;
+                    isRemove = true;
+                    if (hashItems[i].size() == 0) {
+                        hashItems[i] = null;
                     }
-                }
-                if (hashItems[i].size() == 0) {
-                    hashItems[i] = null;
-                    countList--;
                 }
             }
         }
-        return isRetain;
+        return isRemove;
     }
 
     @Override
@@ -169,16 +178,14 @@ public class MyHashTable<T> implements Collection<T> {
         boolean isRetain = false;
         for (int i = 0; i < hashItems.length; i++) {
             if (hashItems[i] != null) {
-                for (int j = 0; j < hashItems[i].size(); j++) {
-                    if (!c.contains(hashItems[i].get(j))) {
-                        remove(hashItems[i].get(j));
-                        j--;
-                        isRetain = true;
+                int tempSize = hashItems[i].size();
+                if (hashItems[i].retainAll(c)) {
+                    length -= tempSize - hashItems[i].size();
+                    modCount++;
+                    isRetain = true;
+                    if (hashItems[i].size() == 0) {
+                        hashItems[i] = null;
                     }
-                }
-                if (hashItems[i].size() == 0) {
-                    hashItems[i] = null;
-                    countList--;
                 }
             }
         }
@@ -190,7 +197,6 @@ public class MyHashTable<T> implements Collection<T> {
         length = 0;
         Arrays.fill(hashItems, null);
         modCount++;
-        countList = 0;
     }
 
     public String toString() {
