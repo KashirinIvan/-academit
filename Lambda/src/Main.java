@@ -3,11 +3,12 @@ import academit.kashirin.lambda.Person;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        @SuppressWarnings("unchecked") ArrayList<Person> people = new ArrayList();
+        ArrayList<Person> people = new ArrayList<>();
 
         people.add(new Person("Иван", 27));
         people.add(new Person("Денис", 25));
@@ -34,24 +35,24 @@ public class Main {
                 .map(Person::getName)
                 .collect(Collectors.joining(", ")));
 
-        System.out.println("Средний возраст людей младше 18 = " + people.stream()
+        OptionalDouble temp = people.stream()
                 .filter(p -> p.getAge() < 18)
                 .mapToDouble(Person::getAge)
-                .average()
-                .isPresent());
+                .average();
+        if (temp.isPresent()) {
+            System.out.println("Средний возраст людей младше 18 = " + temp.getAsDouble());
+        } else {
+            System.out.println("Средний возраст людей младше 18 не посчитан");
+        }
 
         Map<String, Double> personsByAge = people.stream()
-                .collect(Collectors
-                        .groupingBy(Person::getName,
-                                Collectors
-                                        .averagingDouble(Person::getAge)));
+                .collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
 
         personsByAge.forEach((p, age) -> System.out.printf("%s: %s%n", p, age));
 
         System.out.println("Возраст от 20 до 45 = " + people.stream()
                 .filter(p -> p.getAge() > 20 && p.getAge() < 45)
-                .sorted(Comparator.comparingInt(Person::getAge)
-                        .reversed())
+                .sorted(Comparator.comparingInt(Person::getAge).reversed())
                 .map(Person::getName)
                 .collect(Collectors.joining(", ")));
     }
