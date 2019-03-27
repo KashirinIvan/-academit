@@ -65,7 +65,7 @@ public class MyArrayList<T> implements List<T> {
                 //noinspection unchecked
                 a[i] = (T1) items[i];
             }
-            if(a.length>length) {
+            if (a.length > length) {
                 a[length] = null;
             }
         } else {

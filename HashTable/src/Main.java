@@ -2,7 +2,6 @@ import academit.kashirin.hashtable.MyHashTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,11 +26,10 @@ public class Main {
         System.out.println("Количество элементов в таблице = " + hashTable.size());
         System.out.println(Arrays.toString(hashTable.toArray()));
 
-        Iterator<String> iterator = hashTable.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+        for (String element : hashTable) {
+            System.out.println(element);
         }
-        ArrayList<String> list = new ArrayList();
+        ArrayList<String> list = new ArrayList<>();
         list.add("Второй");
         list.add("Двенадцатый");
         list.add("Шестой");
@@ -41,7 +39,7 @@ public class Main {
         System.out.println(Arrays.toString(hashTable.toArray()));
 
         System.out.println("removeAll = " + hashTable.removeAll(list));
-          System.out.println(Arrays.toString(hashTable.toArray()));
+         System.out.println(Arrays.toString(hashTable.toArray()));
 
         System.out.println("addAll = " + hashTable.addAll(list));
         System.out.println(Arrays.toString(hashTable.toArray()));

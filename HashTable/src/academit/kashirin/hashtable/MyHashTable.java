@@ -67,8 +67,8 @@ public class MyHashTable<T> implements Collection<T> {
                 if (hashItems[countListItems].size() == countItems) {
                     ++countListItems;
                     countItems = 0;
-                    if (hashItems[countListItems] == null) {
-                        while (hashItems[countListItems] == null) {
+                    if (hashItems[countListItems] == null || hashItems[countListItems].size() == 0) {
+                        while (hashItems[countListItems] == null || hashItems[countListItems].size() == 0) {
                             ++countListItems;
                         }
                     }
@@ -87,10 +87,10 @@ public class MyHashTable<T> implements Collection<T> {
     @Override
     public Object[] toArray() {
         Object[] temp = new Object[length];
-        int j = 0;
+        int i = 0;
         for (T hashItem : this) {
-            temp[j] = hashItem;
-            j++;
+            temp[i] = hashItem;
+            i++;
         }
         return temp;
     }
@@ -98,15 +98,16 @@ public class MyHashTable<T> implements Collection<T> {
     @Override
     public <T1> T1[] toArray(T1[] a) {
         if (a.length >= length) {
-            for (int i = 0; i < length; i++) {
+            int i = 0;
+            for (T hashItem : this) {
                 //noinspection unchecked
-                a[i] = (T1) hashItems[i];
+                a[i] = (T1) hashItem;
+                i++;
             }
-            if (a.length>length) {
+            if (a.length > length) {
                 a[length] = null;
             }
-        } else
-        {
+        } else {
             //noinspection unchecked
             a = (T1[]) Arrays.copyOf(hashItems, hashItems.length, a.getClass());
         }
@@ -116,13 +117,9 @@ public class MyHashTable<T> implements Collection<T> {
     @Override
     public boolean add(T t) {
         int hash = getHashCode(t);
-        if (hashItems[hash] != null) {
-            hashItems[hash].add(t);
-            length++;
-            modCount++;
-            return true;
+        if (hashItems[hash] == null) {
+            hashItems[hash] = new ArrayList<>();
         }
-        hashItems[hash] = new ArrayList<>();
         hashItems[hash].add(t);
         length++;
         modCount++;
@@ -136,8 +133,10 @@ public class MyHashTable<T> implements Collection<T> {
             return false;
         }
         boolean isRemove = hashItems[hash].remove(o);
-        length--;
-        modCount++;
+        if (isRemove) {
+            length--;
+            modCount++;
+        }
         return isRemove;
     }
 
@@ -153,6 +152,9 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
+        if (c.isEmpty()) {
+            return false;
+        }
         for (T element : c) {
             add(element);
         }
@@ -162,38 +164,32 @@ public class MyHashTable<T> implements Collection<T> {
     @Override
     public boolean removeAll(Collection<?> c) {
         boolean isRemove = false;
-        for (int i = 0; i < hashItems.length; i++) {
-            if (hashItems[i] != null) {
-                int tempSize = hashItems[i].size();
-                if (hashItems[i].removeAll(c)) {
-                    length -= tempSize - hashItems[i].size();
-                    modCount++;
+        for (ArrayList<T> hashItem : hashItems) {
+            if (hashItem != null) {
+                int tempSize = hashItem.size();
+                if (hashItem.removeAll(c)) {
+                    length -= tempSize - hashItem.size();
                     isRemove = true;
-                    if (hashItems[i].size() == 0) {
-                        hashItems[i] = null;
-                    }
                 }
             }
         }
+        modCount++;
         return isRemove;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
         boolean isRetain = false;
-        for (int i = 0; i < hashItems.length; i++) {
-            if (hashItems[i] != null) {
-                int tempSize = hashItems[i].size();
-                if (hashItems[i].retainAll(c)) {
-                    length -= tempSize - hashItems[i].size();
-                    modCount++;
+        for (ArrayList<T> hashItem : hashItems) {
+            if (hashItem != null) {
+                int tempSize = hashItem.size();
+                if (hashItem.retainAll(c)) {
+                    length -= tempSize - hashItem.size();
                     isRetain = true;
-                    if (hashItems[i].size() == 0) {
-                        hashItems[i] = null;
-                    }
                 }
             }
         }
+        modCount++;
         return isRetain;
     }
 
