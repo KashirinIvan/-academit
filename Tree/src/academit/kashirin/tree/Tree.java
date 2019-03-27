@@ -1,5 +1,7 @@
 package academit.kashirin.tree;
 
+import java.util.Stack;
+
 public class Tree<T> {
     private TreeNode<T> root;
     private int count;
@@ -18,19 +20,20 @@ public class Tree<T> {
             count++;
             return;
         }
-        TreeNode<T> currentNode = root;
-        int tempCount = count;
-        while (tempCount == count) {
+        Stack<TreeNode<T>> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.empty()) {
+            TreeNode<T> currentNode = stack.pop();
             if (data.hashCode() < currentNode.getData().hashCode()) {
                 if (currentNode.getLeft() != null) {
-                    currentNode = currentNode.getLeft();
+                    stack.push(currentNode.getLeft());
                 } else {
                     currentNode.setLeft(new TreeNode<>(data, null, null));
                     count++;
                 }
             } else {
                 if (currentNode.getRight() != null) {
-                    currentNode = currentNode.getRight();
+                    stack.push(currentNode.getRight());
 
                 } else {
                     currentNode.setRight(new TreeNode<>(data, null, null));
@@ -41,20 +44,22 @@ public class Tree<T> {
     }
 
     public boolean search(T data) {
-        TreeNode<T> currentNode = root;
-        while (count != 0) {
+        Stack<TreeNode<T>> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.empty()) {
+            TreeNode<T> currentNode = stack.pop();
             if (data.hashCode() == currentNode.getData().hashCode()) {
                 break;
             }
             if (data.hashCode() < currentNode.getData().hashCode()) {
                 if (currentNode.getLeft() != null) {
-                    currentNode = currentNode.getLeft();
+                    stack.push(currentNode.getLeft());
                 } else {
                     return false;
                 }
             } else {
                 if (currentNode.getRight() != null) {
-                    currentNode = currentNode.getRight();
+                    stack.push(currentNode.getRight());
                 } else {
                     return false;
                 }
@@ -64,9 +69,11 @@ public class Tree<T> {
     }
 
     public boolean remove(T data) {
-        TreeNode<T> currentNode = root;
+        Stack<TreeNode<T>> stack = new Stack<>();
+        stack.push(root);
         TreeNode<T> prevNode = null;
-        while (count != 0) {
+        while (!stack.empty()) {
+            TreeNode<T> currentNode = stack.pop();
             if (data.hashCode() == currentNode.getData().hashCode()) {
                 if (currentNode.getLeft() == null && currentNode.getRight() == null) {
                     if (prevNode.getLeft() == currentNode) {
@@ -74,6 +81,7 @@ public class Tree<T> {
                     } else {
                         prevNode.setRight(null);
                     }
+                    count--;
                     break;
                 } else if (currentNode.getLeft() == null || currentNode.getRight() == null) {
                     if (prevNode.getLeft() == currentNode) {
@@ -89,23 +97,46 @@ public class Tree<T> {
                             prevNode.setRight(currentNode.getRight());
                         }
                     }
+                    count--;
                     break;
                 } else {
-
+                    Stack<TreeNode<T>> stackLeft = new Stack<>();
+                    stackLeft.push(currentNode.getRight());
+                    TreeNode<T> currentNodeLeftTemp = null;
+                    while (!stackLeft.empty()) {
+                        TreeNode<T> currentNodeLeft = stackLeft.pop();
+                        if (currentNodeLeft.getLeft() != null) {
+                            currentNodeLeftTemp = currentNodeLeft;
+                            stackLeft.push(currentNodeLeft.getLeft());
+                        } else {
+                            if (currentNodeLeft.getRight() != null) {
+                                currentNodeLeftTemp.setRight(currentNodeLeft.getRight());
+                                prevNode.setLeft(currentNodeLeft);
+                                currentNodeLeft.setLeft(currentNode.getLeft());
+                                currentNodeLeft.setRight(currentNode.getRight());
+                            } else {
+                                currentNodeLeftTemp.setLeft(null);
+                                prevNode.setLeft(currentNodeLeft);
+                                currentNodeLeft.setLeft(currentNode.getLeft());
+                                currentNodeLeft.setRight(currentNode.getRight());
+                            }
+                        }
+                    }
+                    count--;
                     break;
                 }
             }
             if (data.hashCode() < currentNode.getData().hashCode()) {
                 if (currentNode.getLeft() != null) {
                     prevNode = currentNode;
-                    currentNode = currentNode.getLeft();
+                    stack.push(currentNode.getLeft());
                 } else {
                     return false;
                 }
             } else {
                 if (currentNode.getRight() != null) {
                     prevNode = currentNode;
-                    currentNode = currentNode.getRight();
+                    stack.push(currentNode.getRight());
                 } else {
                     return false;
                 }
