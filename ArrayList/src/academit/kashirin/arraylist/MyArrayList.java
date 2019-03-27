@@ -1,6 +1,5 @@
 package academit.kashirin.arraylist;
 
-import javax.naming.SizeLimitExceededException;
 import java.util.*;
 
 public class MyArrayList<T> implements List<T> {
@@ -61,12 +60,16 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        if (a.length >= length + 1) {
+        if (a.length >= length) {
             for (int i = 0; i < length; i++) {
+                //noinspection unchecked
                 a[i] = (T1) items[i];
             }
-            a[length] = null;
+            if(a.length>length) {
+                a[length] = null;
+            }
         } else {
+            //noinspection unchecked
             a = (T1[]) Arrays.copyOf(items, length, a.getClass());
         }
         return a;
@@ -162,8 +165,12 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public boolean retainAll(Collection<?> c) {
         if (c.isEmpty()) {
-            clear();
-            return true;
+            if (isEmpty()) {
+                return false;
+            } else {
+                clear();
+                return true;
+            }
         }
         boolean isRetain = false;
         for (int i = 0; i < size(); i++) {
