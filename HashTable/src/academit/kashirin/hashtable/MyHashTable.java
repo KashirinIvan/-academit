@@ -97,12 +97,17 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        if (a.length >= length + 1) {
+        if (a.length >= length) {
             for (int i = 0; i < length; i++) {
+                //noinspection unchecked
                 a[i] = (T1) hashItems[i];
             }
-            a[length] = null;
-        } else {
+            if (a.length>length) {
+                a[length] = null;
+            }
+        } else
+        {
+            //noinspection unchecked
             a = (T1[]) Arrays.copyOf(hashItems, hashItems.length, a.getClass());
         }
         return a;
