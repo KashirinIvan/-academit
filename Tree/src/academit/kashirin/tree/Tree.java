@@ -115,7 +115,7 @@ public class Tree<T> {
                                 currentNodeLeft.setLeft(currentNode.getLeft());
                                 currentNodeLeft.setRight(currentNode.getRight());
                             } else {
-                                currentNodeLeftTemp.setLeft(null);
+                              //  currentNodeLeftTemp.setLeft(null);
                                 prevNode.setLeft(currentNodeLeft);
                                 currentNodeLeft.setLeft(currentNode.getLeft());
                                 currentNodeLeft.setRight(currentNode.getRight());
