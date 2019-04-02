@@ -47,7 +47,7 @@ public class Main {
         System.out.println("retainAll = " + hashTable.retainAll(list));
         System.out.println(Arrays.toString(hashTable.toArray()));
 
-        Object[] array = new Object[hashTable.size()];
+        Object[] array = new Object[hashTable.size()+2];
         array = hashTable.toArray(array);
         System.out.println("Hash массив = " + Arrays.toString(array));
 

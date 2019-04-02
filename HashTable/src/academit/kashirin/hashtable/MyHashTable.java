@@ -62,7 +62,6 @@ public class MyHashTable<T> implements Collection<T> {
                 throw new NoSuchElementException("Коллекция закончилась");
             }
             if (hashItems[countListItems] != null) {
-                ++currentIndex;
                 ++countItems;
                 if (hashItems[countListItems].size() == countItems) {
                     ++countListItems;
@@ -75,11 +74,11 @@ public class MyHashTable<T> implements Collection<T> {
                 }
             } else {
                 while (hashItems[countListItems] == null) {
-                    ++countListItems;
-                    ++currentIndex;
+                    countListItems++;
                     countItems = 0;
                 }
             }
+            ++currentIndex;
             return hashItems[countListItems].get(countItems);
         }
     }
@@ -105,7 +104,7 @@ public class MyHashTable<T> implements Collection<T> {
                 i++;
             }
             if (a.length > length) {
-                a[length] = null;
+                a[i] = null;
             }
         } else {
             //noinspection unchecked
@@ -173,7 +172,9 @@ public class MyHashTable<T> implements Collection<T> {
                 }
             }
         }
-        modCount++;
+        if (isRemove) {
+            modCount++;
+        }
         return isRemove;
     }
 
@@ -189,7 +190,9 @@ public class MyHashTable<T> implements Collection<T> {
                 }
             }
         }
-        modCount++;
+        if (isRetain) {
+            modCount++;
+        }
         return isRetain;
     }
 
