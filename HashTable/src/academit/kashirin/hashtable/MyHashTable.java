@@ -47,8 +47,8 @@ public class MyHashTable<T> implements Collection<T> {
         private int modCountSave = modCount;
 
         private int currentIndex = -1;
-        private int countListItems = 0;
-        private int countItems = -1;
+        private int ItemsListIndex = 0;
+        private int ItemsIndex = 0;
 
         public boolean hasNext() {
             return currentIndex + 1 < length;
@@ -61,25 +61,13 @@ public class MyHashTable<T> implements Collection<T> {
             if (!hasNext()) {
                 throw new NoSuchElementException("Коллекция закончилась");
             }
-            if (hashItems[countListItems] != null) {
-                ++countItems;
-                if (hashItems[countListItems].size() == countItems) {
-                    ++countListItems;
-                    countItems = 0;
-                    if (hashItems[countListItems] == null || hashItems[countListItems].size() == 0) {
-                        while (hashItems[countListItems] == null || hashItems[countListItems].size() == 0) {
-                            ++countListItems;
-                        }
-                    }
-                }
-            } else {
-                while (hashItems[countListItems] == null) {
-                    countListItems++;
-                    countItems = 0;
-                }
+            while (hashItems[ItemsListIndex] == null || hashItems[ItemsListIndex].size() == ItemsIndex) {
+                ItemsListIndex++;
+                ItemsIndex = 0;
             }
+            ItemsIndex++;
             ++currentIndex;
-            return hashItems[countListItems].get(countItems);
+            return hashItems[ItemsListIndex].get(ItemsIndex - 1);
         }
     }
 
@@ -96,6 +84,7 @@ public class MyHashTable<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
+        //noinspection unchecked
         if (a.length >= length) {
             int i = 0;
             for (T hashItem : this) {
@@ -104,11 +93,11 @@ public class MyHashTable<T> implements Collection<T> {
                 i++;
             }
             if (a.length > length) {
-                a[i] = null;
+                a[length] = null;
             }
         } else {
-            //noinspection unchecked
-            a = (T1[]) Arrays.copyOf(hashItems, hashItems.length, a.getClass());
+            //noinspection SingleStatementInBlock,unchecked
+            a = (T1[]) Arrays.copyOf(this.toArray(), length, a.getClass());
         }
         return a;
     }
