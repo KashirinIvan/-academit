@@ -47,8 +47,8 @@ public class MyHashTable<T> implements Collection<T> {
         private int modCountSave = modCount;
 
         private int currentIndex = -1;
-        private int ItemsListIndex = 0;
-        private int ItemsIndex = 0;
+        private int itemsListIndex = 0;
+        private int itemsIndex = 0;
 
         public boolean hasNext() {
             return currentIndex + 1 < length;
@@ -61,13 +61,13 @@ public class MyHashTable<T> implements Collection<T> {
             if (!hasNext()) {
                 throw new NoSuchElementException("Коллекция закончилась");
             }
-            while (hashItems[ItemsListIndex] == null || hashItems[ItemsListIndex].size() == ItemsIndex) {
-                ItemsListIndex++;
-                ItemsIndex = 0;
+            while (hashItems[itemsListIndex] == null || hashItems[itemsListIndex].size() == itemsIndex) {
+                itemsListIndex++;
+                itemsIndex = 0;
             }
-            ItemsIndex++;
+            itemsIndex++;
             ++currentIndex;
-            return hashItems[ItemsListIndex].get(ItemsIndex - 1);
+            return hashItems[itemsListIndex].get(itemsIndex - 1);
         }
     }
 
