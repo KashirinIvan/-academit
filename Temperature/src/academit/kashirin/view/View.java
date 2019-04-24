@@ -1,17 +1,38 @@
 package academit.kashirin.view;
 
+import academit.kashirin.controller.Controller;
+
+import java.awt.*;
 import javax.swing.*;
 
-public class View {
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JFrame frame = new JFrame("My first GUI application");
-                frame.setSize(300, 200); // размер окна
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+public class View extends JFrame {
+    private JButton button = new JButton("Расчет");
+    private JTextField input = new JTextField("", 1);
+    private JLabel labelInput = new JLabel("Введите значение температуры:");
+    String[] items = {"Цельсий", "Кельвин", "Фаренгейт"};
+    private JComboBox comboBoxInput = new JComboBox(items);
+    private JComboBox comboBoxOutput = new JComboBox(items);
+    private JLabel output = new JLabel("");
+    private JLabel labelOutput = new JLabel("Конвертированное значение температуры:");
 
-                frame.setVisible(true);
-            }
-        });
+
+    public View() {
+        JFrame frame = new JFrame("Перевод температуры");
+        frame.setSize(900, 100);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Container container = frame.getContentPane();
+        container.setLayout(new GridLayout(0, 3));
+        container.add(labelInput);
+        container.add(input);
+        container.add(comboBoxInput);
+        container.add(labelOutput);
+        container.add(output);
+        container.add(comboBoxOutput);
+
+        Controller controller = new Controller();
+        button.addActionListener(controller);
+        frame.add(button);
+        frame.setVisible(true);
     }
 }

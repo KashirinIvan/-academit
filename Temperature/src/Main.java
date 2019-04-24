@@ -1,7 +1,18 @@
 import academit.kashirin.view.View;
 
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        View view = new View();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                createAndShowGUI();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    public static void createAndShowGUI() {
+        new View();
     }
 }
