@@ -12,7 +12,7 @@ public class Main {
             }
         });
     }
-    public static void createAndShowGUI() {
-        new View();
+    public static void createAndShowGUI(){
+        View view = new View();
     }
 }

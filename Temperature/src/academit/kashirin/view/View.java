@@ -1,11 +1,14 @@
 package academit.kashirin.view;
 
+import academit.kashirin.Interface;
 import academit.kashirin.controller.Controller;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class View extends JFrame {
+public class View extends JFrame implements Interface {
     private JButton button = new JButton("Расчет");
     private JTextField input = new JTextField("", 1);
     private JLabel labelInput = new JLabel("Введите значение температуры:");
@@ -29,10 +32,22 @@ public class View extends JFrame {
         container.add(labelOutput);
         container.add(output);
         container.add(comboBoxOutput);
-
+        
         Controller controller = new Controller();
         button.addActionListener(controller);
+
         frame.add(button);
         frame.setVisible(true);
     }
+
+    @Override
+    public double getInputTemperature() {
+        return Double.parseDouble(input.getText());
+    }
+
+    @Override
+    public void setOutputTemperature(double temperature) {
+        output.setText(Double.toString(temperature));
+    }
+
 }
