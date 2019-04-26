@@ -1,8 +1,5 @@
 package academit.kashirin;
 
-
-
-
 public interface Interface {
     double getInputTemperature();
 

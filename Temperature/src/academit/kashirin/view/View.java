@@ -1,8 +1,6 @@
 package academit.kashirin.view;
 
 import academit.kashirin.Interface;
-import academit.kashirin.controller.Controller;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,9 +30,10 @@ public class View extends JFrame implements Interface {
         container.add(labelOutput);
         container.add(output);
         container.add(comboBoxOutput);
-        
-        Controller controller = new Controller();
-        button.addActionListener(controller);
+
+        button.addActionListener(e -> {
+
+        });
 
         frame.add(button);
         frame.setVisible(true);

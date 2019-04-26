@@ -10,6 +10,10 @@ public class Controller implements ActionListener {
     private Interface view;
     private Model model = new Model();
 
+    public Controller(Interface view) {
+        this.view = view;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         model.setInput(view.getInputTemperature());
