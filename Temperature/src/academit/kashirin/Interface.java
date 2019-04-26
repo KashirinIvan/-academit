@@ -6,5 +6,6 @@ public interface Interface {
     void setOutputTemperature(double temperature);
 
     int getInputScale();
+
     int getOutputScale();
 }
