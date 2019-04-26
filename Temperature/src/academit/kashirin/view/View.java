@@ -1,9 +1,9 @@
 package academit.kashirin.view;
 
 import academit.kashirin.Interface;
+import academit.kashirin.controller.Controller;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class View extends JFrame implements Interface {
@@ -16,12 +16,10 @@ public class View extends JFrame implements Interface {
     private JLabel output = new JLabel("");
     private JLabel labelOutput = new JLabel("Конвертированное значение температуры:");
 
-
     public View() {
         JFrame frame = new JFrame("Перевод температуры");
         frame.setSize(900, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         Container container = frame.getContentPane();
         container.setLayout(new GridLayout(0, 3));
         container.add(labelInput);
@@ -30,11 +28,7 @@ public class View extends JFrame implements Interface {
         container.add(labelOutput);
         container.add(output);
         container.add(comboBoxOutput);
-
-        button.addActionListener(e -> {
-
-        });
-
+        button.addActionListener(new Controller(this));
         frame.add(button);
         frame.setVisible(true);
     }
@@ -48,5 +42,16 @@ public class View extends JFrame implements Interface {
     public void setOutputTemperature(double temperature) {
         output.setText(Double.toString(temperature));
     }
+
+    @Override
+    public int getInputScale() {
+        return comboBoxInput.getSelectedIndex();
+    }
+
+    @Override
+    public int getOutputScale() {
+        return comboBoxOutput.getSelectedIndex();
+    }
+
 
 }
