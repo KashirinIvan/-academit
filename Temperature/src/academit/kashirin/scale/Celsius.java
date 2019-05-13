@@ -3,15 +3,18 @@ package academit.kashirin.scale;
 import academit.kashirin.InterfaceScale;
 
 public class Celsius implements InterfaceScale {
-    private Double inputTemperature;
 
     @Override
-    public void ConvertInCelsius(Double inputTemperature) {
-        this.inputTemperature = inputTemperature;
+    public Double ConvertInCelsius(Double inputTemperature) {
+        if (inputTemperature == null) {
+            return null;
+        } else {
+            return inputTemperature;
+        }
     }
 
     @Override
-    public Double ConvertFromCelsius() {
+    public Double ConvertFromCelsius(Double inputTemperature) {
         if (inputTemperature == null) {
             return null;
         } else {

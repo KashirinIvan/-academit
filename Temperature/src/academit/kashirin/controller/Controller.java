@@ -19,7 +19,7 @@ public class Controller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        scales[view.getInputScale()].ConvertInCelsius(view.getInputTemperature());
-        view.setOutputTemperature(scales[view.getOutputScale()].ConvertFromCelsius());
+        double a = scales[view.getInputScale()].ConvertInCelsius(view.getInputTemperature());
+        view.setOutputTemperature(scales[view.getOutputScale()].ConvertFromCelsius(a));
     }
 }

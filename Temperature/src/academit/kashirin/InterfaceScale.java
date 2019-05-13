@@ -1,7 +1,7 @@
 package academit.kashirin;
 
 public interface InterfaceScale {
-    void ConvertInCelsius(Double inputTemperature);
+    Double ConvertInCelsius(Double inputTemperature);
 
-    Double ConvertFromCelsius();
+    Double ConvertFromCelsius(Double inputTemperature);
 }
