@@ -1,25 +1,25 @@
 package academit.kashirin.controller;
 
-import academit.kashirin.Interface;
-import academit.kashirin.model.Model;
+import academit.kashirin.InterfaceScale;
+import academit.kashirin.InterfaceTemperatureView;
+import academit.kashirin.view.View;
 
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller implements ActionListener {
-    private Interface view;
-    private Model model = new Model();
+    private InterfaceTemperatureView view;
+    private InterfaceScale[] scales;
 
-    public Controller(Interface view) {
+    public Controller(View view, InterfaceScale[] scale) {
         this.view = view;
+        this.scales = scale;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        model.setInput(view.getInputTemperature());
-        model.setInputScale(view.getInputScale());
-        model.setOutputScale(view.getOutputScale());
-        view.setOutputTemperature(model.getOutput());
+        scales[view.getInputScale()].ConvertInCelsius(view.getInputTemperature());
+        view.setOutputTemperature(scales[view.getOutputScale()].ConvertFromCelsius());
     }
 }
