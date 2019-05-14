@@ -1,6 +1,6 @@
 package academit.kashirin;
 
-public interface InterfaceTemperatureView {
+public interface TemperatureView {
     Double getInputTemperature();
 
     void setOutputTemperature(Double temperature);

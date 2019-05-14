@@ -1,11 +1,10 @@
 package academit.kashirin.scale;
 
-import academit.kashirin.InterfaceScale;
+import academit.kashirin.Scale;
 
-public class Kelvin implements InterfaceScale {
-
+public class Kelvin implements Scale {
     @Override
-    public Double ConvertInCelsius(Double inputTemperature) {
+    public Double convertToCelsius(Double inputTemperature) {
         if (inputTemperature == null) {
             return null;
         } else {
@@ -14,7 +13,7 @@ public class Kelvin implements InterfaceScale {
     }
 
     @Override
-    public Double ConvertFromCelsius(Double inputTemperature) {
+    public Double convertFromCelsius(Double inputTemperature) {
         if (inputTemperature == null) {
             return null;
         } else {
