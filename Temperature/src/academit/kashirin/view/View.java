@@ -77,6 +77,6 @@ public class View implements TemperatureView {
     }
 
     public void initialize() {
-        SwingUtilities.invokeLater(() -> new View());
+        SwingUtilities.invokeLater(View::new);
     }
 }
