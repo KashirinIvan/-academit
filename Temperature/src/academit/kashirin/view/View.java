@@ -1,13 +1,10 @@
 package academit.kashirin.view;
 
-import academit.kashirin.Scale;
 import academit.kashirin.TemperatureView;
 import academit.kashirin.controller.Controller;
-import academit.kashirin.scale.Celsius;
-import academit.kashirin.scale.Fahrenheit;
-import academit.kashirin.scale.Kelvin;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class View implements TemperatureView {
@@ -16,8 +13,10 @@ public class View implements TemperatureView {
     private JComboBox<String> comboBoxInput = new JComboBox<>(items);
     private JComboBox<String> comboBoxOutput = new JComboBox<>(items);
     private JLabel output = new JLabel("");
+    private Controller controller;
 
-    public View() {}
+    public View() {
+    }
 
     @Override
     public Double getInputTemperature() {
@@ -49,6 +48,11 @@ public class View implements TemperatureView {
         return comboBoxOutput.getSelectedIndex();
     }
 
+    @Override
+    public ActionListener setController(Controller controller) {
+        return this.controller = controller;
+    }
+
     public void initialize() {
         SwingUtilities.invokeLater(() -> {
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -73,7 +77,7 @@ public class View implements TemperatureView {
             container.add(output);
             container.add(comboBoxOutput);
             JButton button = new JButton("Расчет");
-            button.addActionListener(new Controller(this, new Scale[]{new Celsius(), new Kelvin(), new Fahrenheit()}));
+            button.addActionListener(setController(controller));
             frame.add(button);
 
             frame.setVisible(true);
