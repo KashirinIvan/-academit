@@ -17,34 +17,7 @@ public class View implements TemperatureView {
     private JComboBox<String> comboBoxOutput = new JComboBox<>(items);
     private JLabel output = new JLabel("");
 
-    public View() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = 900;
-        int height = 100;
-        int locationX = (screenSize.width - width) / 2;
-        int locationY = (screenSize.height - height) / 2;
-
-        JFrame frame = new JFrame("Перевод температуры");
-        frame.setBounds(locationX, locationY, width, height);
-        frame.setMinimumSize(new Dimension(900, 100));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        Container container = frame.getContentPane();
-        container.setLayout(new GridLayout(0, 3));
-        JLabel labelInput = new JLabel("Введите значение температуры:");
-        container.add(labelInput);
-        container.add(input);
-        container.add(comboBoxInput);
-        JLabel labelOutput = new JLabel("Конвертированное значение температуры:");
-        container.add(labelOutput);
-        container.add(output);
-        container.add(comboBoxOutput);
-        JButton button = new JButton("Расчет");
-        button.addActionListener(new Controller(this, new Scale[]{new Celsius(), new Kelvin(), new Fahrenheit()}));
-        frame.add(button);
-
-        frame.setVisible(true);
-    }
+    public View() {}
 
     @Override
     public Double getInputTemperature() {
@@ -78,6 +51,32 @@ public class View implements TemperatureView {
 
     public void initialize() {
         SwingUtilities.invokeLater(() -> {
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int width = 900;
+            int height = 100;
+            int locationX = (screenSize.width - width) / 2;
+            int locationY = (screenSize.height - height) / 2;
+
+            JFrame frame = new JFrame("Перевод температуры");
+            frame.setBounds(locationX, locationY, width, height);
+            frame.setMinimumSize(new Dimension(900, 100));
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            Container container = frame.getContentPane();
+            container.setLayout(new GridLayout(0, 3));
+            JLabel labelInput = new JLabel("Введите значение температуры:");
+            container.add(labelInput);
+            container.add(input);
+            container.add(comboBoxInput);
+            JLabel labelOutput = new JLabel("Конвертированное значение температуры:");
+            container.add(labelOutput);
+            container.add(output);
+            container.add(comboBoxOutput);
+            JButton button = new JButton("Расчет");
+            button.addActionListener(new Controller(this, new Scale[]{new Celsius(), new Kelvin(), new Fahrenheit()}));
+            frame.add(button);
+
+            frame.setVisible(true);
         });
     }
 }
