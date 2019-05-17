@@ -1,7 +1,5 @@
 package academit.kashirin;
 
-import academit.kashirin.controller.Controller;
-
 import java.awt.event.ActionListener;
 
 public interface TemperatureView {
@@ -13,6 +11,6 @@ public interface TemperatureView {
 
     int getOutputScale();
 
-    ActionListener setController(Controller controller);
+    void setController(ActionListener controller);
 
 }

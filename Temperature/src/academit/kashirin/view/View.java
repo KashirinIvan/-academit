@@ -1,8 +1,6 @@
 package academit.kashirin.view;
 
 import academit.kashirin.TemperatureView;
-import academit.kashirin.controller.Controller;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -13,7 +11,7 @@ public class View implements TemperatureView {
     private JComboBox<String> comboBoxInput = new JComboBox<>(items);
     private JComboBox<String> comboBoxOutput = new JComboBox<>(items);
     private JLabel output = new JLabel("");
-    private Controller controller;
+    private ActionListener controller;
 
     public View() {
     }
@@ -49,8 +47,8 @@ public class View implements TemperatureView {
     }
 
     @Override
-    public ActionListener setController(Controller controller) {
-        return this.controller = controller;
+    public void setController(ActionListener controller) {
+        this.controller = controller;
     }
 
     public void initialize() {
@@ -77,7 +75,7 @@ public class View implements TemperatureView {
             container.add(output);
             container.add(comboBoxOutput);
             JButton button = new JButton("Расчет");
-            button.addActionListener(setController(controller));
+            button.addActionListener(controller);
             frame.add(button);
 
             frame.setVisible(true);
